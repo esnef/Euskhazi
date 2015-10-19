@@ -37,10 +37,16 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+        
+        //Se a cargado la aplicacion
+        
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
 	
+    	
+    	
+    	//Esta es la logica para pasar por todas las aaciones
 		page.load(0);//The best way to avoid page-0 as background
 		
     	var pageDiv;

@@ -11,7 +11,7 @@
         <title>Euskhazi autentication</title>
     </head>
     <body>
-		<div data-role="page" id="page-0">
+		<div data-role="page" id="authentication_page">
 			<div data-role="header" data-position="fixed" >
 				<h1 style="margin-left:0;margin-right:0;white-space: nowrap;overflow: visible;">LOGIN USER</h1>
 			</div>
@@ -20,7 +20,15 @@
 					<label for="text-1">Login:</label>
 					<input name="text-1" id="authentication_login_input" data-clear-btn="true" value="" type="text" placeholder="Enter your login" />
 					<a href="" id="authentication_login_button" class="ui-btn ui-btn-inline ui-corner-all"	onclick="login()" >Login</a>
-				</div>					
+				</div>
+				<div id="authentication_user_div" class="ui-field-contain ui-hide-label" style="margin:5px 5%;">
+					<ul data-role="listview" id="authentication_user_ul" data-inset="true">
+						<li><a href="item1.html">Item 1</a></li>
+						<li><a href="item2.html">Item 2</a></li>
+						<li><a href="item3.html">Item 3</a></li>
+					</ul>
+				</div>
+									
 			</div>
 			<div data-role="footer" data-position="fixed">
 				<h1></h1>	

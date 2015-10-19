@@ -20,7 +20,9 @@
 var user={
 		name:null,
 		pass:null
-}
+};
+var keyUsers="user";
+var users=new Array();
 
 
 var tests = {

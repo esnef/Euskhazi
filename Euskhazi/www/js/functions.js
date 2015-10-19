@@ -21,19 +21,35 @@
 
 function login() {
 	var loginVal=$("#login").val();
-	
-
+	alert("0");
+	/*
 	if(loginVal.trim.length != 0){
 		user.name=loginVal;
-		confirm("User login"+loginVal);
-		$(".login").text("LOGIN: "+loginVal);
-		tests.login=loginVal;
-		results.login=loginVal;
-		$("#form-0").show();
-		$("#request").hide();
+		$("#authentication_page").hide();
 	}
-	
+	*/
+	alert("1");
+    this.start();
+    
 		
+}
+
+function start(){
+	alert("2");
+	//Sacamos los valores gusrdados de los diferentes usuarios guardados
+	var permanentStorage = window.localStorage;
+	var tempStorage = window.sessionStorage;
+	alert("3");
+	//users=window.localStorage.key(users.key);
+	alert("4");
+	
+	alert(JSON.stringify(users));
+	users.push(user);
+	users[users.length-1].name="hola"
+	users.push(user);
+	users[users.length-1].name="hola1"
+	alert(JSON.stringify(users));
+	
 }
 
 function check(i) {

@@ -19,7 +19,7 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-function login() {
+function login() { 
 	var loginVal=$("#login").val();
 	
 

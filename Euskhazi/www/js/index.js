@@ -19,7 +19,7 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-var app = { 
+var app = {  
     // Application Constructor
     initialize: function() {
         this.bindEvents();

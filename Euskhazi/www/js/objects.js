@@ -16,12 +16,18 @@
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details
  * <http://www.gnu.org/licenses/>.
  */
-
+/*
 var user={
 		name:null,
 		pass:null
 }
-
+*/
+var users=new Array();
+var keyUsers="users"
+function User() {
+	  var name="";
+	  var pass="";
+}
 
 var tests = {
 	login: null,

@@ -1,39 +1,81 @@
-/*
- * $Id: functions.js Oct 9, 2015 9:47:15 AM tta1516$
- * 
- * Copyright (C) 2015 Maider Huarte Arrayago
- * 
- * This file is part of TTA1516_LS-EX_08v5_www.zip.
- * 
- * TTA1516_LS-EX_08v5_www.zip is based on templates by Eclipse.org - Thym and it is intended
- * for learning purposes only.
- * 
- * TTA1516_LS-EX_08v5_www.zip is free software: you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option) any later
- * version.
- * 
- * TTA1516_LS-EX_08v5_www.zip is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details
- * <http://www.gnu.org/licenses/>.
- */
+
 
 function login() {
-	var loginVal=$("#login").val();
-	
-
-	if(loginVal.trim.length != 0){
-		user.name=loginVal;
-		confirm("User login"+loginVal);
-		$(".login").text("LOGIN: "+loginVal);
-		tests.login=loginVal;
-		results.login=loginVal;
-		$("#form-0").show();
-		$("#request").hide();
+	var loginVal=$("#authentication_login_input").val();
+	var newUser=new User();
+	newUser.name=loginVal.toString().trim();
+	if(loginVal!=null && loginVal.toString().trim().length != 0){
+		if(checkUser(newUser)){
+			saveNewUser(newUser)
+			refreshNewUsersList();
+			user.name=loginVal;
+			$("#authentication_page").hide();
+		}else{
+			alert("A user already exists with this name");
+		}
+	}else{
+		alert("Empty string");
 	}
-	
 		
+}
+
+function start(){
+	//Sacamos los valores gusrdados de los diferentes usuarios guardados
+	var permanentStorage = window.localStorage;
+	var tempStorage = window.sessionStorage;
+	var usersJSON=window.localStorage.getItem(keyUsers);
+	if(usersJSON!=null){
+	//Existen usuario con lo que hay que cargarlos
+		users=JSON.parse(usersJSON);
+		refreshUsersList();			
+	}
+}
+function refreshUsersList(){
+	if(users!=null){
+		var $authentication_users_ul=$('#authentication_users_ul');
+		for(con=0;con<users.length;con++){
+			
+			$authentication_users_ul.append(
+					'<li><a href="item1.html">'+users[con].name+'</a></li>'
+					);
+			
+		}
+		
+    	$('#authentication_users_ul').listview('refresh');
+	}
+}
+
+function refreshNewUsersList(){
+	if(users!=null){
+		var $authentication_users_ul=$('#authentication_users_ul');	
+		$authentication_users_ul.append('<li><a href="item1.html">'+users[users.length-1].name+'</a></li>');
+		$authentication_users_ul.listview('refresh');
+	}
+}
+
+function checkUser(newUser){
+	if(newUser==null){
+		return false;
+	}else if(users==null){
+		return false;
+	}else{
+		for(con=0;con<users.length;con++){
+			if(users[con].name==newUser.name){
+				return false;
+			}
+		}
+		return true;
+	}
+}
+
+function saveNewUser(newUser){
+	if(users==null){
+		users=new Array();
+	}
+	users.push(newUser);
+	var permanentStorage = window.localStorage;
+	var tempStorage = window.sessionStorage;
+	var usersJSON=window.localStorage.setItem(keyUsers,JSON.stringify(users));
 }
 
 function check(i) {

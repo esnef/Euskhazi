@@ -25,12 +25,25 @@
 					<ul data-role="listview" id="authentication_users_ul" data-inset="true">
 					</ul>
 				</div>
-									
+				<a href="dialog.html" class="ui-shadow ui-btn ui-corner-all ui-btn-inline" data-transition="pop">Open dialog</a>
 			</div>
-			<div data-role="footer" data-position="fixed">
+			<div data-role="#dialogremoveuser" data-position="fixed">
 				<h1></h1>	
 			</div>    
         </div>
+        <div data-role="page" data-dialog="true" id="dialogremoveuser">
+			<div data-role="header">
+				<h1>¿Quiéres borrar este usuario?</h1>
+			</div>
+			<div data-role="content">
+				
+				<h3>¿Estas seguro de borrar este usario?</h3>
+				<div data-role="controlgroup" data-type="horizontal">
+					<a name="dialogRemoveUser" id="dialogRemoveUserConfirmar" href="" class="ui-btn ui-corner-all">confirmar</a>
+					<a name="dialogRemoveUser" href="" class="ui-btn ui-corner-all">cancelar</a>
+				</div>
+			</div>
+		</div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/objects.js"></script>        
         <script type="text/javascript" src="js/functions.js"></script>        

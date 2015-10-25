@@ -34,16 +34,48 @@
     <body>
 		<div data-role="page" id="page-0">
 			<div data-role="header" data-position="fixed" >
-				<h1 style="margin-left:0;margin-right:0;white-space: nowrap;overflow: visible;">EUSKHAZI</h1>
+				<h1 style="margin-left:0;margin-right:0;white-space: nowrap;overflow: visible;">TTA1516_LS-EX_08v5: test5</h1>
 			</div>
-			
-			<div>
-				<a href="#" id="prev-0" class="button-link_level" data-transition="turn">A1</a>
+			<div data-role="content">
+				<div id="request" class="ui-field-contain ui-hide-label" style="margin:5px 5%;">
+					<label for="text-1">Login:</label>
+					<input name="text-1" id="login" data-clear-btn="true" value="" type="text" placeholder="Enter your login" />
+					<a href="" id="button-1" class="ui-btn ui-btn-inline ui-corner-all"	onclick="login()" >CLICK</a>
+				</div>
+		        <h3 class="login"></h3>
+				<form id="form-0" style="display:none">
+					<fieldset data-role="controlgroup" data-iconpos="right">
+						<legend id="question-0"></legend>
+						<input name="radio-choice-0" id="radio-choice-0a" data-mini="true" value="0" type="radio"/>
+						<label for="radio-choice-0a" id="label-radio-choice-0-0"></label>
+						<input name="radio-choice-0" id="radio-choice-0b" data-mini="true" value="1" type="radio"/>
+						<label for="radio-choice-0b" id="label-radio-choice-0-1"></label>
+						<input name="radio-choice-0" id="radio-choice-0c" data-mini="true" value="2" type="radio"/>
+						<label for="radio-choice-0c" id="label-radio-choice-0-2"></label>
+						<input name="radio-choice-0" id="radio-choice-0d" data-mini="true" value="3" type="radio"/>
+						<label for="radio-choice-0d" id="label-radio-choice-0-3"></label>
+					</fieldset>
+					<div style="text-align:center;">
+						<a href="" id="button-0-1" class="ui-btn ui-btn-inline ui-corner-all" onclick="check(0)">CHECK</a>
+						<a href="" id="button-0-2" class="ui-btn ui-btn-inline ui-corner-all" style="display:none;" onclick="">ADVICE</a>
+					</div>
+				</form>
+				<div id="audioAdvice-0" style="display:none;">
+					AUDIO ADVICE
+					<audio id="audio-0" controls="controls" preload="none">
+						<source id="src-audio-0" src=""/>
+					</audio>
+				</div>						
+				<div id="videoAdvice-0" style="display:none;">
+					VIDEO ADVICE
+					<video id="video-0" controls="controls" width="320" height="240">						
+						<source id="src-video-0" src="" type="video/mp4"/>
+					</video>
+				</div>
+				<div id="imageAdvice-0" style="display:none;">
+					<img id="image-0" alt="" src="" width="auto" height="auto" style="border: black 1px solid;"/>
+				</div>						
 			</div>
-			
-			
-			
-			
 			<div data-role="footer" data-position="fixed">
 				<div class="ui-grid-b" style="width:80%; text-align:center; font-weight:normal;">
 					<div class="ui-block-a">RESULTS: </div>

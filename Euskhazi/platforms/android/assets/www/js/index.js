@@ -37,13 +37,31 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+        /*
+        $.getJSON( "exams/B1/berridazketak.json", function( data ) {
+        		alert("h1");
+			  alert("data: "+data.length+' statements:'+data[0].statements.length+' data: '+data[0].statements[0].statement);
+			  alert("h2");
+			});
+        */
+        alert("s1");
+		//Prueba;
+		
+		
+		
+		
+		
+		
+        alert("s3");
         start();
+        
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-	
-		page.load(0);//The best way to avoid page-0 as background
+    	
+		//page.load(0);//The best way to avoid page-0 as background
 		
+		/*
     	var pageDiv;
     	for(var i=1;i<tests.total;i++) {
     		pageDiv=page.create(i);
@@ -53,13 +71,25 @@ var app = {
 
      	$("#prev-0").remove();
      	$("#next-"+(tests.total-1)).attr("href","#page-0");
+     	*/
+		/*
+		for(var i=0;i<10;i++) {
+    		pageDiv=page.create(i);
+    		$("body").append(pageDiv);
+    		page.load(i);
+    	}
+    	*/
+		alert("s1");
+		//Prueba;
+		//exams=loadBerridazketak(level);
+		//alert("Prueba: "+exams.length+" "+exams[0].length);
+		//pageDiv=pageBerridazketak.
 		
     	//Adjust img sizes
-     	
-		$("body").enhanceWithin();//To apply styles
+		//$("body").enhanceWithin();//To apply styles
 		
     	//Bind imgFit function to resize event
-
+		
     }
 };
 

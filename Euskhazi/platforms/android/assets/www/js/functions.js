@@ -1,6 +1,12 @@
 
 
+
+
+
+
+
 function login() {
+	/*
 	var loginVal=$("#authentication_login_input").val();
 	var newUser=new User();
 	newUser.name=loginVal.toString().trim();
@@ -16,10 +22,28 @@ function login() {
 	}else{
 		alert("Empty string");
 	}
-		
+	*/
+	alert("HOLA1");
+	
+	/*$("#request").hide();
+	$("#form-0").show();*/
+	
+	alert("HOLA2");
+	var a=$("#example_page_berridazketa-exam-0");
+	if(a!=null){
+		a.show();
+	}else{
+		alert("ḦOLA4");
+	}
+	$("#authentication_page").hide();
+	
+	//$.mobile.changePage("#example_page_berridazketa-exam-0");
+	alert("HOLA3");
 }
 
 function start(){
+	loadBerridazketak("B1");
+	/*
 	//Sacamos los valores gusrdados de los diferentes usuarios guardados
 	var permanentStorage = window.localStorage;
 	var tempStorage = window.sessionStorage;
@@ -29,9 +53,11 @@ function start(){
 		users=JSON.parse(usersJSON);
 		refreshUsersList();			
 	}
+	*/
 	/**
 	 * Funcion que permite controlar los botones presionados un tiempo elevado
 	 */
+	/*
 	$("a[name*='authentication_users_ul_li_']").on("taphold",function(){
 			alert("s1");
 		  var name=$(this).val;
@@ -46,6 +72,7 @@ function start(){
 		  });
 		  //$('#dialogRemoveUserConfirmar').click(removeUser(name));
 		});
+	*/
 	
 }
 function refreshUsersList(){

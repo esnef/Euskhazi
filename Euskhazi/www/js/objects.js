@@ -39,15 +39,55 @@ function loadDataJSONBerridazketak(fileName,level){
 	    console.log(json); // this will show the info it in firebug console
 	    exams=json;
 	    var pageDiv="";
+	    pageDiv=pageDiv+pageBerridazketak.createMenu(exams,level);
 	    //Creamos todos los div pertinentes de los examenes Berridazketak
 	    for(con=0;con<exams.length;con++){
 	    	pageDiv=pageDiv+pageBerridazketak.create(con,exams);
 	    }
 	    //Los introducimos en el body
 	    $("body").append(pageDiv);
+	    //Ahora realizamos el cambio de pantalla a la del menu de examenes
+	    $(':mobile-pagecontainer').pagecontainer('change', '#example_page_menu_exams_berridazketa-level-'+level+'');
 	});	
 }
+
 var pageBerridazketak={
+		
+		createMenu: function(exams,level){
+			if(level==null || exams==null){
+				return null;
+			}
+			var pageDiv=$('<div data-role="page" id="example_page_menu_exams_berridazketa-level-'+level+'"></div>');
+			var headerDiv=
+				'<div data-role="header" data-position="fixed" >'+
+					'<h1 style="margin-left:0;margin-right:0;white-space: nowrap;overflow: visible;">'+'Berridazketak '+level+'</h1>'+
+				'</div>';
+			
+			var statementsDivs='<ul data-role="listview">';
+			
+			for(var con=0;con<exams[i].statements.length;con++){
+				statementsDivs=statementsDivs+
+				  '<li><a href="acura.html" id="example_li_menu_exams_berridazketa-level-'+level+'-exams-'+con+'">'+Berridazketa azterketa +''+(con+1)+'</a></li>';
+			}
+			
+			statementsDivs=statementsDivs+'</ul>';
+			
+			var contentDiv=
+				'<div data-role="content">'+statementsDivs+'</div>';
+			var footerDiv=
+				'<div data-role="footer" data-position="fixed" style="padding-top:1%;">'+
+					'<div class="ui-grid-b">'+
+						'<div class="ui-block-a" style="text-align:left;width:20%;">'+
+						'</div>'+
+						'<div class="ui-block-b" style="text-align:center;width:60%;"><h4 style="margin-bottom:1%;"></h4></div>'+
+						'<div class="ui-block-c" style="text-align:right;width:20%;">'+
+						'</div>'+
+					'</div>'+
+				'</div>';
+			pageDiv.append(headerDiv,contentDiv,footerDiv);
+			return pageDiv;
+		},
+		
 		create: function(i,exams){
 			if(exams==null){
 				alert("No se ha podido presentar en pantalla porque se ha pasado un valor menos a uno");

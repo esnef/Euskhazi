@@ -23,12 +23,10 @@ function login() {
 		alert("Empty string");
 	}
 	*/
-	alert("HOLA1");
 	
 	/*$("#request").hide();
 	$("#form-0").show();*/
 	
-	alert("HOLA2");
 	var a=$("#example_page_berridazketa-exam-0");
 	if(a!=null){
 		a.show();
@@ -38,11 +36,12 @@ function login() {
 	$("#authentication_page").hide();
 	
 	//$.mobile.changePage("#example_page_berridazketa-exam-0");
-	alert("HOLA3");
 }
 
 function start(){
+
 	loadBerridazketak("B1");
+	
 	/*
 	//Sacamos los valores gusrdados de los diferentes usuarios guardados
 	var permanentStorage = window.localStorage;
@@ -75,6 +74,9 @@ function start(){
 	*/
 	
 }
+
+
+
 function refreshUsersList(){
 	if(users!=null){
 		var $authentication_users_ul=$('#authentication_users_ul');

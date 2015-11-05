@@ -44,7 +44,6 @@ var app = {
 			  alert("h2");
 			});
         */
-        alert("s1");
 		//Prueba;
 		
 		
@@ -52,7 +51,6 @@ var app = {
 		
 		
 		
-        alert("s3");
         start();
         
     },
@@ -79,7 +77,6 @@ var app = {
     		page.load(i);
     	}
     	*/
-		alert("s1");
 		//Prueba;
 		//exams=loadBerridazketak(level);
 		//alert("Prueba: "+exams.length+" "+exams[0].length);

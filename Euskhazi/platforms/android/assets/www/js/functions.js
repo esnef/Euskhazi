@@ -1,58 +1,30 @@
 
-
-
-
-
-
-
 function login() {
-	/*
+	
 	var loginVal=$("#authentication_login_input").val();
 	var newUser=new User();
 	newUser.name=loginVal.toString().trim();
 	if(loginVal!=null && loginVal.toString().trim().length != 0){
 		if(checkUser(newUser)){
 			saveNewUser(newUser)
-			refreshNewUsersList();
-			user.name=loginVal;
-			$("#authentication_page").hide();
+			refreshUsersList();
+			loadUser(newUser.name);
 		}else{
 			alert("A user already exists with this name");
 		}
 	}else{
 		alert("Empty string");
 	}
-	*/
 	
-	/*$("#request").hide();
-	$("#form-0").show();*/
 	
-	var a=$("#example_page_berridazketa-exam-0");
-	if(a!=null){
-		a.show();
-	}else{
-		alert("ḦOLA4");
-	}
-	$("#authentication_page").hide();
 	
-	//$.mobile.changePage("#example_page_berridazketa-exam-0");
 }
 
 function start(){
 
-	loadBerridazketak("B1");
+	refreshUsers();
+
 	
-	/*
-	//Sacamos los valores gusrdados de los diferentes usuarios guardados
-	var permanentStorage = window.localStorage;
-	var tempStorage = window.sessionStorage;
-	var usersJSON=window.localStorage.getItem(keyUsers);
-	if(usersJSON!=null){
-	//Existen usuario con lo que hay que cargarlos
-		users=JSON.parse(usersJSON);
-		refreshUsersList();			
-	}
-	*/
 	/**
 	 * Funcion que permite controlar los botones presionados un tiempo elevado
 	 */
@@ -72,34 +44,52 @@ function start(){
 		  //$('#dialogRemoveUserConfirmar').click(removeUser(name));
 		});
 	*/
-	
 }
 
-
+function refreshUsers(){
+	//Sacamos los valores gusrdados de los diferentes usuarios guardados
+	var permanentStorage = window.localStorage;
+	var tempStorage = window.sessionStorage;
+	var usersJSON=window.localStorage.getItem(keyUsers);
+	if(usersJSON!=null){
+		//Existen usuario con lo que hay que cargarlos
+			users=JSON.parse(usersJSON);
+			refreshUsersList();	
+	}
+}
 
 function refreshUsersList(){
 	if(users!=null){
 		var $authentication_users_ul=$('#authentication_users_ul');
+		$authentication_users_ul.empty()
 		for(con=0;con<users.length;con++){
 			
 			$authentication_users_ul.append(
-					'<li><a href="item1.html" name="authentication_users_ul_li_'+users[con].name+'">'+users[con].name+'</a></li>'
+					'<li><a href="#" onClick="loadUser(&#39;'+users[con].name+'&#39;)" name="authentication_users_ul_li_'+users[con].name+'">'+users[con].name+'</a></li>'
 					);
 			
 		}
-		
     	$('#authentication_users_ul').listview('refresh');
 	}
 }
 
-function refreshNewUsersList(){
-	if(users!=null){
-		var $authentication_users_ul=$('#authentication_users_ul');	
-		$authentication_users_ul.append('<li><a href="item1.html" name="authentication_users_ul_li_'+users[con].name+'>'+users[users.length-1].name+'</a></li>');
-		$authentication_users_ul.listview('refresh');
+function loadUser(name){
+	var position=findUser(name);
+	if(position>=0){
+		userNow=users[position];
+		loadPageLeves();
 	}
 }
 
+/*
+function refreshNewUsersList(){
+	if(users!=null){
+		var $authentication_users_ul=$('#authentication_users_ul');	
+		$authentication_users_ul.append('<li><a href="#" name="authentication_users_ul_li_'+users[con].name+'>'+users[users.length-1].name+'</a></li>');
+		$authentication_users_ul.listview('refresh');
+	}
+}
+*/
 function checkUser(newUser){
 	if(newUser==null){
 		return false;
@@ -127,6 +117,7 @@ function saveUsers(){
 	var permanentStorage = window.localStorage;
 	var tempStorage = window.sessionStorage;
 	var usersJSON=window.localStorage.setItem(keyUsers,JSON.stringify(users));
+	refreshUsers();
 }
 
 
@@ -136,7 +127,11 @@ function saveUsers(){
  * @returns se devuelve la posición del usuario en el array.
  */
 function findUser(name){
-	if(name==null || users==null)return -1;
+	if(name==null){
+		return -1;
+	}else if(users==null){
+		refreshUsers();
+	}
 	for(con=0;con<users.length;con++){
 		if(name==users[con].name){
 			return con
@@ -151,7 +146,6 @@ function findUser(name){
  * @param name
  */
 function removeUser(name){
-	alert("s2")
 	if(name==null)return false;
 	var position=findUser(name);
 	if(position <0){

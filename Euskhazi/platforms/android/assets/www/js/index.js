@@ -45,12 +45,7 @@ var app = {
 			});
         */
 		//Prueba;
-		
-		
-		
-		
-		
-		
+
         start();
         
     },

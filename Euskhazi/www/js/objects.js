@@ -86,8 +86,10 @@ var pageAtarikoa={
 				'<label for="radio-choice-'+con+'d" id="label-radio-choice-'+con+'-3">'+exams[i].statements[con].answers[0].fourth+'</label>'+
 				'</fieldset>';
 			}
+			statementsDivs=statementsDivs+'<div id="form-atarikoa-buttons">';
 			statementsDivs=statementsDivs+'<a id="correctExams_atarikoa" name="onClickCorrectExams" href="" onClick="checkAtarikoa('+i+')" class="ui-btn">Zuzendu</a>'
 			statementsDivs=statementsDivs+'<a style="display:none;" id="salir-atarikoa-button" href="#page_menu_atarikoa" class="ui-btn">Irten</a>'
+			statementsDivs=statementsDivs+'</div>';
 			statementsDivs='<form id="form-atarikoa">'+statementsDivs+'</form>';
 			
 			var contentDiv=
@@ -97,7 +99,7 @@ var pageAtarikoa={
 					'<div class="ui-grid-b">'+
 						'<div class="ui-block-a" style="text-align:left;align-content:center;width:20%;">'+
 						'</div>'+
-						'<div class="ui-block-b" style="text-align:center;align-content:center;width:60%;"><h4 id="example_h4_correct_answer_berridazketa-exam-'+i+'" style="margin-bottom:1%;">Erantzun zuzena:0</h4></div>'+
+						'<div class="ui-block-b" style="text-align:center;align-content:center;width:60%;"><h4 id="correct_answer_atarikoa" style="margin-bottom:1%;">Erantzun zuzena: 0</h4></div>'+
 						'<div class="ui-block-c" style="text-align:right;align-content:center;width:20%;">'+
 						'</div>'+
 					'</div>'+

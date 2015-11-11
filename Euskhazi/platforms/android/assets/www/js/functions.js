@@ -53,21 +53,34 @@ function checkAtarikoa(i){
 	for(var con=0;con < examsAtarikoa[i].statements.length;con++){
 		var answer=$("input[name='radio-choice-atarikoa-"+con+"']:checked").val();
 		if(answer){
+			$("label[id|='label-radio-choice-"+con+"']").each(
+				function(index) {
+					if(index!=examsAtarikoa[i].statements[con].solution) {
+						$(this).css("color","red");
+					}
+					else
+						$(this).css({"color":"white","background-color":"green","font-size":"24px"});
+				}
+			);
 			respondidos++;
 			if(answer == examsAtarikoa[i].statements[con].solution){
 				correctos++;
 			}
 		}
 	}
-	alert(respondidos);
+	$('#correct_answer_atarikoa').text('Erantzun zuzenak: '+correctos);
 	if(respondidos < examsAtarikoa[i].statements.length){
 		alert((examsAtarikoa[i].statements.length-respondidos)+' galdera falta zaizkizu erantzuteko');
 		return;
 	}
 	var minimoParaAprobar=examsAtarikoa[i].statements.length*(3/4);
+	
+	$buttons=$('#form-atarikoa-buttons').empty();
+	backButton='<a id="salir-atarikoa-button" href="#page_menu_atarikoa" class="ui-btn">Irten</a>';
+	$buttons.append(backButton);
+	
 	if(correctos<minimoParaAprobar){
 		alert('Ez duzu gainditu!');
-		$('#salir-atarikoa-button').click();
 		
 	}else{
 		alert('ZORIONAK!! Gainditu duzu!');

@@ -18,8 +18,63 @@
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details
  * <http://www.gnu.org/licenses/>.
  */
+//BERRIDAZKETAK INIT
+function loadDataJSONAtarikoa(level){
+//	$.getJSON(fileFolder+level+'/'+fileName, function(json) {
+	$.getJSON('exams/'+level+'/Atarikoa.json', function(json) {
+	    console.log(json); // this will show the info it in firebug console
+	    examsAtarikoa=json;
+//	    examsAtarikoa[0].statements[0].statement;//lehenengo galdera iteko
+//	    examsAtarikoa[0].statements[0].answers[0];//lehenengo galderaren lehenengo erantzuna
+	});	
+}
 
-function login() { 
+function loadAtarikoaMenu(){
+	loadDataJSONAtarikoa('B1');
+	setTimeout(function() {
+		var $menuAtarikoa = pageAtarikoa.createMenu(examsAtarikoa, 'B1');
+		$("body").append($menuAtarikoa);
+		$("body").enhanceWithin();
+		$(':mobile-pagecontainer').pagecontainer('change', '#page_menu_atarikoa');
+	}, 50);
+	
+}
+
+function loadExamAtarikoa(i){
+	var $examenAtarikoa = pageAtarikoa.createExam(i, examsAtarikoa, 'B1')
+	$("body").append($examenAtarikoa);
+	$("body").enhanceWithin();
+	$(':mobile-pagecontainer').pagecontainer('change', '#page-exam-atarikoa-'+i);
+}
+
+function checkAtarikoa(i){
+	var respondidos=0;
+	var correctos=0;
+	for(var con=0;con < examsAtarikoa[i].statements.length;con++){
+		var answer=$("input[name='radio-choice-atarikoa-"+con+"']:checked").val();
+		if(answer){
+			respondidos++;
+			if(answer == examsAtarikoa[i].statements[con].solution){
+				correctos++;
+			}
+		}
+	}
+	alert(respondidos);
+	if(respondidos < examsAtarikoa[i].statements.length){
+		alert((examsAtarikoa[i].statements.length-respondidos)+' galdera falta zaizkizu erantzuteko');
+		return;
+	}
+	var minimoParaAprobar=examsAtarikoa[i].statements.length*(3/4);
+	if(correctos<minimoParaAprobar){
+		alert('Ez duzu gainditu!');
+		$('#salir-atarikoa-button').click();
+		
+	}else{
+		alert('ZORIONAK!! Gainditu duzu!');
+	}
+}
+
+/*function login() { 
 	var loginVal=$("#login").val();
 	
 
@@ -68,9 +123,9 @@ function check(i) {
 
 	$("#button-"+i+"-1").attr("onclick","");
 //	alert("check 7");
-}
+}*/
 
-function advice(pI,qI) {
+/*function advice(pI,qI) {
 	var adv=tests.test[pI].adv[qI];
 	if(adv.endsWith("ogg")||adv.endsWith("mp3")){
 		$("#src-audio-"+pI).attr("src",adv);
@@ -96,4 +151,4 @@ function advice(pI,qI) {
 		}
 	}
 		
-}
+}*/

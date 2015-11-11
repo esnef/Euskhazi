@@ -37,6 +37,10 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+//    	loadDataJSONAtarikoa('B1');
+//    	setTimeout(function() {
+//        	createAtarikoa();
+//		}, 50);
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {

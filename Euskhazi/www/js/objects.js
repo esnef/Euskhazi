@@ -113,7 +113,90 @@ var pageAtarikoa={
 		}
 			
 };
-
-
-
-//ATARIKOA END
+var pageSinonimoak={
+		
+		createMenu: function(exams,level){
+			if(level==null || exams==null){
+				return null;
+			}
+			$('#page_menu_sinonimoak').remove();
+			var pageDiv=$('<div data-role="page" id="page_menu_sinonimoak" name="page_menu_sinonimoak"></div>');
+			var headerDiv=
+				'<div data-role="header" data-position="fixed" >'+
+					'<h1 style="margin-left:0;margin-right:0;white-space: nowrap;overflow: visible;">'+'Sinonimoak '+level+'</h1>'+
+				'</div>';
+			
+			var statementsDivs='<ul data-role="listview">';
+			
+			for(var con=0;con<exams.length;con++){
+				statementsDivs=statementsDivs+
+				  '<li><a href="#" onClick="loadExamSinonimoak('+con+')" id="menu_exam_sinonimoak-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
+			}
+			
+			statementsDivs=statementsDivs+'</ul>';
+			
+			var contentDiv=
+				'<div data-role="content">'+statementsDivs+'</div>';
+			var footerDiv=
+				'<div data-role="footer" data-position="fixed" style="padding-top:1%;">'+
+					'<div class="ui-grid-b">'+
+						'<div class="ui-block-a" style="text-align:left;width:20%;">'+
+						'</div>'+
+						'<div class="ui-block-b" style="text-align:center;width:60%;"><h4 style="margin-bottom:1%;"></h4></div>'+
+						'<div class="ui-block-c" style="text-align:right;width:20%;">'+
+						'</div>'+
+					'</div>'+
+				'</div>';
+			pageDiv.append(headerDiv,contentDiv,footerDiv);
+			return pageDiv;
+		},
+		
+		createExam: function(i,exams,level){
+			if(exams==null || level==null){
+				alert("No se ha podido presentar en pantalla porque se ha pasado un valor menos a uno");
+				return null;
+			}else if(i>=exams.length){
+				alert("No se puede solicitar un numero de examen superior al que se tiene");
+				return null;
+			}
+			$('#page-exam-sinonimoak').remove();
+			var pageDiv=$('<div id="page-exam-sinonimoak" data-role="page" ></div>');
+			var headerDiv=
+				'<div data-role="header" data-position="fixed" >'+
+					'<h1 style="margin-left:0;margin-right:0;white-space: nowrap;overflow: visible;">'+'Sinonimoak '+level+' '+(i+1)+'</h1>'+
+				'</div>';
+			
+			var statementsDivs="";
+			for(var con=0;con<exams[i].statements.length;con++){
+				statementsDivs+=
+				'<fieldset data-role="controlgroup" data-iconpos="right">'+
+				'<legend id="question-'+con+'">'+(con+1)+'.- '+exams[i].statements[con].statement+' ('+exams[i].statements[con].placeholder+')</legend>'+
+				'<input name="answer-sinonimoak-'+con+'" id="answer-sinonimoak-'+con+'a" data-mini="true" data-clear-btn="true" value="" type="text"/>'+
+				'</fieldset>';
+			}
+			statementsDivs=statementsDivs+'<div id="form-sinonimoak-buttons">';
+			statementsDivs=statementsDivs+'<a id="correctExams_sinonimoak" name="onClickCorrectExams" href="" onClick="checkSinonimoak('+i+')" class="ui-btn">Zuzendu</a>'
+			statementsDivs=statementsDivs+'</div>';
+			statementsDivs='<form id="form-sinonimoak">'+statementsDivs+'</form>';
+			
+			var contentDiv=
+				'<div data-role="content">'+statementsDivs+'</div>';
+			var footerDiv=
+				'<div data-role="footer" data-position="fixed" style="padding-top:1%;">'+
+					'<div class="ui-grid-b">'+
+						'<div class="ui-block-a" style="text-align:left;align-content:center;width:20%;">'+
+						'</div>'+
+						'<div class="ui-block-b" style="text-align:center;align-content:center;width:60%;"><h4 id="correct_answer_sinonimoak" style="margin-bottom:1%;">Erantzun zuzena: 0</h4></div>'+
+						'<div class="ui-block-c" style="text-align:right;align-content:center;width:20%;">'+
+						'</div>'+
+					'</div>'+
+				'</div>';
+			pageDiv.append(headerDiv,contentDiv,footerDiv);
+			return pageDiv;
+		},
+		load: function(i) {
+			
+			alert("load1");
+		}
+			
+};

@@ -27,6 +27,7 @@ function User() {
 	  var name="";
 	  var pass="";
 	  var examsBerridazketak=new Array();
+	  var examsAhozkoa=new Array();
 }
 /**
  * clase para gurdar los resultados de los examenes, se usa 
@@ -36,6 +37,7 @@ function ResultExamn(){
 		var level="";
 		var numExam=-1.1;
 		var result=-1.1;
+		var voiceFileName="";
 }
 var userNow=new User();//Usuario actual del sistema
 userNow.name="";
@@ -46,6 +48,8 @@ userNow.examsBerridazketak=new Array();
 var fileFolder="exams/";
 var fileNameBerridazketak="berridazketak.json";
 var fileNameAhozkoa="ahozkoa.json";
+var fileFolderAhozkoaVoice="/sdcard/Euskhazi/voice/";
+
 //var level="B1";
 var exams=null;
 //AHOZKOA INIT
@@ -73,184 +77,56 @@ function loadDataJSONAhozkoa(fileName,level){
 	    //Los introducimos en el body
 
 	    $("body").enhanceWithin();
+	    
 	    //Ahora realizamos el cambio de pantalla a la del menu de examenes
 	    if( $('#example_page_menu_exams_ahozkoa-level-'+level+'').length )         // use this if you are using id to check
 	    {
 	    	//Existe.
 		    $(':mobile-pagecontainer').pagecontainer('change', '#example_page_menu_exams_ahozkoa-level-'+level+'');
 		    //Se ejecutara cuando se presiona el boton de corrección
-		    /*
-		    $( "a[name='onClickCorrectExams']" ).on( "click", function() {
+		    
+		    $( "a[name='onClickCorrectExamsAhozkoa']" ).on( "click", function() {
 		    	var id=$(this).attr("id");
-		    	if (id.indexOf('correctExams_a_')!=-1 && id.indexOf('berridazketa')!=-1) {
+		    	if (id.indexOf('correctExams_a_')!=-1 && id.indexOf('ahozkoa')!=-1) {
 		    		var positionNumExam =id.indexOf('exam-')+'exam-'.length;
 		    		var numExam=id[positionNumExam];
 		    		var positionlevelExam =id.indexOf('level-')+'level-'.length;
 		    		var levelExam=id.slice(positionlevelExam,positionlevelExam+2);
-		    		//Sabiendo a que examen nos referimos y que nivel podemos iniciar el proceso de corrección.
-		    		//EN primer lugar buscaremos todos los valores de las preguntas dicho examen.
-		    		//result_input_berridazketa-exam-'+i+'-level-statement-'+con+'
-		    		//result_input_berridazketa-exam-'+i+'-level-'+level+'-statement-'+con+'
-		    		//result_label_berridazketa-exam-'+i+'-level-'+level+'-answer-'+i+'
-		    		var $inputsStatement=$('input[name|="result_input_berridazketa-exam-'+numExam+'-level-'+level+'"]');
-		    		if(exams!=null || $inputsStatement.length){
-		    			//var statements=exams[numExam].statements;
-		    			var successes=0;
-		    			$inputsStatement.each(function( index ) {
-		    				//Recorre todos los input sacando los valores para que podamos examinarlo los aciertos comparandolos
-		    				var value=$(this).val().trim().toLowerCase();
-		    			    var solution=exams[numExam].statements[index].solution.trim().toLowerCase();
-		    			    if(value==solution){
-		    			    	successes++;
-		    			    	var $result_label_error__berridazketa=$('p[id|="result_label_error__berridazketa-exam-'+numExam+'-level-'+level+'-statement-'+index+'"]');
-		    			    	if($result_label_error__berridazketa.length){
-		    			    		$result_label_error__berridazketa.hide();
-		    			    	}
-		    			    	
-		    			    }else{
-		    			    	//NO es igual
-		    			    	//result_label_error__berridazketa-exam-'+i+'-level-'+level+'-statement-'+i+'
-		    			    	var $result_label_error__berridazketa=$('p[id|="result_label_error__berridazketa-exam-'+numExam+'-level-'+level+'-statement-'+index+'"]');
-		    			    	if($result_label_error__berridazketa.length){
-		    			    		$result_label_error__berridazketa.show();
-		    			    	}
-		    			    }
-		    			  });
-		    			$('#example_h4_correct_answer_berridazketa-exam-'+numExam+'').text("Erantzun zuzena:"+successes);
-		    			//En el caso de que successes sea mayor a la mitad de las presntas se dara por superiado el examen
-    			    	if(successes>=((exams[numExam].statements.length/2)+1)){	
-    			    		var resultExam=10*(successes/(exams[numExam].statements.length));
-    			    		alert("Azterketa gainditu ditu "+resultExam+" puntu eman");
-    			    		//Guardamos el resultado para indicar que ha sido superado el examen
-    			    		if(userNow!=null){
-    			    			//examsBerridazketak
-    			    			var con=-1;
-    			    			var control=false;
-    			    			if(userNow.examsBerridazketak==undefined){
-    			    				userNow.examsBerridazketak=new Array();
-    			    			}
-    			    			for(con=0;con<userNow.examsBerridazketak.length;con++){
-    			    				if(userNow.examsBerridazketak[con].level==level && userNow.examsBerridazketak[con].numExam==numExam){
-    			    					control=true;
-    			    					break;
-    			    				}
-    			    			}
-    			    			examBerridazketak=new ResultExamn();
-    			    			examBerridazketak.level=levelExam;
-    			    			examBerridazketak.numExam=numExam;
-    			    			examBerridazketak.result=resultExam;
-    			    			if(control){
-        			    			userNow.examsBerridazketak[con]=examBerridazketak;
-    			    			}else{
-        			    			userNow.examsBerridazketak.push(examBerridazketak);
-    			    			}
-    			    			//Guardamos todas las modificaciones
-    			    			saveUsers();
-    			    			
-    			    			
-    			    			//Ya se ha guardado el resultado
-    			    			$.mobile.back();
-    			    		}
-    			    		
-    			    		
-    			    	}
-		    			
-		    		}else{
-		    			alert("Error 10");
-		    		}
-		    		
-		    	}
-		    	
-		    });
-		    //Evento onClick en el boton de presentar solucion
-		    $( "a[name='onClickShowSolution']" ).on( "click", function() {
-		    	
-		    	var id=$(this).attr("id");
-		    	if (id.indexOf('correctExams_a_showSolution')!=-1 && id.indexOf('berridazketa')!=-1) {
-		    		var positionNumExam =id.indexOf('exam-')+'exam-'.length;
-		    		var numExam=id[positionNumExam];
-		    		var positionlevelExam =id.indexOf('level-')+'level-'.length;
-		    		var levelExam=id.slice(positionlevelExam,positionlevelExam+2);
-		    		//Ya comporbado que se ha producido un evento el boton de presentar soluciónes realizaremos la busqueda de todos los <p> con 
-		    		//las soluciones y los presentaremos
-		    		
-		    		
-		    		var $inputsStatement=$('input[name|="result_input_berridazketa-exam-'+numExam+'-level-'+level+'"]');
-		    		if(exams!=null || $inputsStatement.length){
-		    			//var statements=exams[numExam].statements;
-		    			var successes=0;
-		    			$inputsStatement.each(function( index ) {
-		    				//Recorre todos los input sacando los valores para que podamos examinarlo los aciertos comparandolos
-		    				var value=$(this).val().trim().toLowerCase();
-		    			    var solution=exams[numExam].statements[index].solution.trim().toLowerCase();
-		    			    if(value==solution){
-		    			    	//La solución es correcta
-		    			    	successes++;
-		    			    	var $result_label_error__berridazketa=$('p[id|="result_label_solution_berridazketa-exam-'+numExam+'-level-'+level+'-statement-'+index+'"]');
-		    			    	if($result_label_error__berridazketa.length){
-		    			    		$result_label_error__berridazketa.hide();
-		    			    	}
-		    			    }else{
-		    			    	//NO es igual
-		    			    	//result_label_error__berridazketa-exam-'+i+'-level-'+level+'-statement-'+i+'
-		    			    	var $result_label_error__berridazketa=$('p[id|="result_label_solution_berridazketa-exam-'+numExam+'-level-'+level+'-statement-'+index+'"]');
-		    			    	if($result_label_error__berridazketa.length){
-		    			    		$result_label_error__berridazketa.show();
-		    			    	}
-		    			    }
-		    			  });
-		    			$('#example_h4_correct_answer_berridazketa-exam-'+numExam+'').text("Erantzun zuzena:"+successes);
-		    		}else{
-		    			alert("Error 11");
-		    		}
-		    		
-		    	}
-		    });
-
-		    //Ahora realizamos la espera de eventos de que se visualice la pagina de seleccional el nivel
-	    	$("div").on( "pageshow", function( event, ui ) {
-	    		var idSearch="example_page_menu_exams_berridazketa-level-";
-	    		var id=$(this).attr("id");
-	    		var positionID =id.indexOf(idSearch);
-	    		if(positionID>=0){
-	    			var positionString =id.indexOf(idSearch)+idSearch.length;
-	    			var levelExam=id.slice(positionString,positionString+2);
-	    			var examsBerridazketakNow=new Array();
-	    			if(userNow!=null){
-	    				if(userNow.examsBerridazketak==undefined){
-		    				userNow.examsBerridazketak=new Array();
-		    			}
-	    				for(con=0;con<userNow.examsBerridazketak.length;con++){
-							if(userNow.examsBerridazketak[con].level==levelExam){
-								examsBerridazketakNow.push(userNow.examsBerridazketak[con]);
+		    		//Ahora debemos comprobar si esta el archivo de la grabacion esta realizado o no
+		    		checkIfFileExists("cdvfile://"+fileFolderAhozkoaVoice,"voice_ahozkoa_userName_"+userNow.name+"_level_"+levelExam+"_exam_"+numExam+".3gp",function(fileEntry){
+		    			//El archivo existe con lo que podemos realizar el almacenamiento en la variable concreta dentro de UserNow
+		    			if(userNow!=null && userNow!=undefined){
+		    				if(userNow.examsAhozkoa==undefined){
+			    				userNow.examsAhozkoa=new Array();
+			    			}
+		    				resultExamnNow=new ResultExamn();
+		    				resultExamnNow.voiceFileName;
+		    				resultExamnNow.level=levelExam;
+		    				resultExamnNow.numExam=numExam;
+		    				resultExamnNow.result=0;//DE momento no se tiene un resultado del examen
+		    				var control=true;
+		    				for(var con=0;con<userNow.examsAhozkoa.length;con++){
+								if(userNow.examsAhozkoa[con].level==levelExam && userNow.examsAhozkoa[con].numExam==numExam){
+									userNow.examsAhozkoa[con]=resultExamnNow
+									control=false;
+									break;
+								}
 							}
-						}
-    				}
-	    			$('a[id|="example_li_menu_exams_berridazketa-level-'+levelExam+'"]').each(function( index ) {
-	    				for(con=0;con<examsBerridazketakNow.length;con++){
-	    					if(examsBerridazketakNow[con].numExam==index){
-	    						if(examsBerridazketakNow[con].result>=6){
-		    						//Aprobado ponemos en azul
-		    						$(this).css('color', 'blue');
-		    						$(this).text("Azterketa "+(index+1)+" Puntuazio:"+examsBerridazketakNow[con].result);
-		    						
-		    					}else{
-		    						//Suspendido ponemos en rojo
-		    						$(this).css('color', 'red');
-		    					}
-	    					}
-	    				
-	    					
+		    				if(control){
+		    					userNow.examsAhozkoa.push(resultExamnNow);
+		    				}
+		    				alert("Grabazioa egin eta zuzenketa gehiagorako datorrena geroztik");
+		    				//Guardamos todas las modificaciones
+			    			saveUsers();
+			    			//Ya se ha guardado el resultado
+			    			$.mobile.back();
 	    				}
-	    			});
-	    			
-	    			//id example_li_menu_exams_berridazketa-level-'+level+'-exams-'+con+'
-	    			//Sabiendo el nivel del examen podemos mirar si existne examen de este tipo aprobados e imprimirlo en pantalla
-	    		}
-	    		
-	    		
-	    		
-	    	});*/    
+		    		});
+
+		    	}
+		    	
+		    });
+		       
 	    }else{
 	    	alert("Error:"+"No exite el ID de dicha pagina");
 	    }
@@ -267,6 +143,20 @@ function loadDataJSONAhozkoa(fileName,level){
 	    
 	});	
 }
+
+function checkIfFileExists(path,fileName,onSuccess){
+	window.resolveLocalFileSystemURL(path+fileName,//Acceder al fichero original por su URL
+			function(fileEntry) {//función successCallback: si se ha podido acceder al fichero original
+				//fileEntry.remove(onSuccess);//Borrar el fichero y seguir con onSuccess
+				if(onSuccess!=false)
+					onSuccess(fileEntry);
+			},
+			function(error) {
+			});
+}
+
+
+
 
 var pageAhozkoa={
 		
@@ -335,47 +225,56 @@ var pageAhozkoa={
 				'</div>';
 			
 			var statementsDivs="";
-			/*
-			for(var con=0;con<exams[i].statements.length;con++){
-				statementsDivs=statementsDivs+
-				'<div id="result_div_ahozkoa-exam-'+i+'-level-'+level+'-statement-'+con+'" class="ui-field-contain">'+
-				'<p hidden name="result_p_error_berridazketa" id="result_label_error__berridazketa-exam-'+i+'-level-'+level+'-statement-'+con+'" style="color:red" >'+'Erantzuna ez da zuzena'+'</p>'+
-				'<p name="result_p_ahozkoa-exam-'+i+'-level-'+level+'-statement-'+con+'" id="result_label_berridazketa-exam-'+i+'-level-'+level+'-statement-'+con+'">'+exams[i].statements[con].statement+'</p>'+
-				'<input  name="result_input_berridazketa-exam-'+i+'-level-'+level+'-statement-'+con+'" id="result_label_berridazketa-exam-'+i+'-level-'+level+'-answer-'+con+'" data-clear-btn="true" value="" type="text" placeholder="'+exams[i].statements[con].placeholder+'"/>'+
-				'<p hidden name="result_p_solution_berridazketa" id="result_label_solution_berridazketa-exam-'+i+'-level-'+level+'-statement-'+con+'" style="color:red" >'+'Konponbidea:'+exams[i].statements[con].solution+'</p>'+
-				'</div>'
-				;
-			}*/
-			statementsDivs=statementsDivs+
-			'<div id="div_ahozkoa-exam-'+i+'-level-'+level+'-statement-'+con+'" class="ui-field-contain">'+
-			'<p name="title_p_ahozkoa-exam-'+i+'-level-'+level+'" id="title_p_ahozkoa-exam-'+i+'-level-'+level+'">'+exams[i].title+'</p>'+
-			'<p name="explanation_p_ahozkoa-exam-'+i+'-level-'+level+'" id="explanation_p_ahozkoa-exam-'+i+'-level-'+level+'">'+exams[i].explanation+'</p>'+
-			'<ul data-role="listview" data-inset="true">';	
-			/*
-			for(var con=0;con<exams[i].questions.length;con++){
-				statementsDivs=statementsDivs+
-				'<li id="questions_li_ahozkoa-exam-'+i+'-level-'+level+'-question-'+con+'>'+exams[i].questions[con].question+'</li>'
-				;
-				alert("1");
-			}
-			*/
-			statementsDivs=statementsDivs+
-			'<li id="questions_li_ahozkoa-exam-'+i+'-level-'+level+'-question-'+0+'>'+exams[i].questions[0].question+'</li><br/>'
-			;
-			statementsDivs=statementsDivs+
-			'<li id="questions_li_ahozkoa-exam-'+i+'-level-'+level+'-question-'+1+'>'+exams[i].questions[1].question+'</li><br/>'
-			;
-			statementsDivs=statementsDivs+
-			'<li id="questions_li_ahozkoa-exam-'+i+'-level-'+level+'-question-'+2+'>'+exams[i].questions[2].question+'</li><br/>'
-			;
 			
 			statementsDivs=statementsDivs+
-			'</ul></div>';
+			'<div id="div_ahozkoa-exam-'+i+'-level-'+level+'-statement-'+con+'" class="ui-field-contain">';
+				statementsDivs=statementsDivs+
+				'<h3 name="title_p_ahozkoa-exam-'+i+'-level-'+level+'" id="title_p_ahozkoa-exam-'+i+'-level-'+level+'">'+exams[i].title+'</h3>'+
+				'<p name="explanation_p_ahozkoa-exam-'+i+'-level-'+level+'" id="explanation_p_ahozkoa-exam-'+i+'-level-'+level+'">'+exams[i].explanation+'</p>';	
+				
+				
+				statementsDivs=statementsDivs+
+				'<ul>';
+				for(var con=0;con<exams[i].questions.length;con++){
+					statementsDivs=statementsDivs+
+					'<li id="questions_li_ahozkoa-exam-'+i+'-level-'+level+'-question-'+con+'">'+exams[i].questions[con].question+'</li>'
+					;
+				}
+				statementsDivs=statementsDivs+
+				'</ul>';
+				
+				
+				for(var con=0;con<exams[i].imagesURL.length;con++){
+					statementsDivs=statementsDivs+
+					'<div style="width: 100%;">';
+						statementsDivs=statementsDivs+
+						'<img id="imagesURL_img_ahozkoa-exam-'+i+'-level-'+level+'-img-'+con+'" style="width: 100%;" alt="Photo portrait" src="'+exams[i].imagesURL[con].imageURL+'"/>';
+					statementsDivs=statementsDivs+
+					'</div>';
+				}
 			statementsDivs=statementsDivs+
-			'<ul data-role="listview" data-inset="true"><li><a href="#">Default is right arrow</a></li><li data-icon="plus"><a href="#">data-icon="plus"</a></li><li data-icon="minus"><a href="#">data-icon="minus"</a></li><li data-icon="delete"><a href="#">data-icon="delete"</a></li><li data-icon="location"><a href="#">data-icon="location"</a></li>   <li data-icon="false"><a href="#">data-icon="false"</a></li></ul>';
-		
-			//statementsDivs=statementsDivs+'<a id="correctExams_a_'+'ahozkoa'+'-exam-'+i+'-level-'+level+'" name="onClickCorrectExamsAhozkoa" href="" class="ui-btn">Zuzena</a>'
+			'</div>';
 			
+			statementsDivs=statementsDivs+
+			'<div id="div2_ahozkoa-exam-'+i+'-level-'+level+'-statement-'+con+'" class="ui-field-contain">';
+				statementsDivs=statementsDivs+
+				'<div data-role="controlgroup" id="buttons-1" data-type="horizontal" align="center">'+
+					'<a href="#" onClick="recordVoice(&#39;'+level+'&#39;,&#39;'+i+'&#39;)" name="Butons_recorder_ahozkoa" id="Butons_recorder_ahozkoa-exam-'+i+'-level-'+level+'" class="ui-btn ui-corner-all">Record</a>'+
+					'<a href="#" onClick="stopVoice(&#39;'+level+'&#39;,&#39;'+i+'&#39;)" name="Butons_play_ahozkoa" id="Butons_play_ahozkoa-exam-'+i+'-level-'+level+'" class="ui-btn ui-corner-all">stop</a>'+
+				'</div>';
+				
+				statementsDivs=statementsDivs+
+				'<p hidden id="file_voice_p_ahozkoa-exam-'+i+'-level-'+level+'"></p>'+
+				'<audio hidden id="file_voice_audio_ahozkoa-exam-'+i+'-level-'+level+'" controls="controls">'+
+					'<source src=""/>'+
+				'</audio>';
+				statementsDivs=statementsDivs+
+				'<h4>Termino:</h4><p><i>'+exams[i].conditions+'</i></p>';
+				
+			
+				statementsDivs=statementsDivs+'<a id="correctExams_a_'+'ahozkoa'+'-exam-'+i+'-level-'+level+'" name="onClickCorrectExamsAhozkoa" href="" class="ui-btn">Zuzena</a>'
+			statementsDivs=statementsDivs+
+			'</div>';
 			var contentDiv=
 				'<div data-role="content">'+statementsDivs+'</div>';
 			var footerDiv=
@@ -383,7 +282,7 @@ var pageAhozkoa={
 					'<div class="ui-grid-b">'+
 						'<div class="ui-block-a" style="text-align:left;align-content:center;width:20%;">'+
 						'</div>'+
-						'<div class="ui-block-b" style="text-align:center;align-content:center;width:60%;"><h4 id="example_h4_correct_answer_berridazketa-exam-'+i+'" style="margin-bottom:1%;">Erantzun zuzena:0</h4></div>'+
+						'<div class="ui-block-b" style="text-align:center;align-content:center;width:60%;"><h4 id="example_h4_correct_answer_berridazketa-exam-'+i+'" style="margin-bottom:1%;"></h4></div>'+
 						'<div class="ui-block-c" style="text-align:right;align-content:center;width:20%;">'+
 						'</div>'+
 					'</div>'+
@@ -392,7 +291,6 @@ var pageAhozkoa={
 			return pageDiv;
 		},
 		load: function(i) {
-			
 			alert("load1");
 		}
 			
@@ -404,6 +302,109 @@ function loadAhozkoa(level){
 	}
 	loadDataJSONAhozkoa(fileNameAhozkoa,level);
 }
+var state=0;
+function recordVoice(level,exam){
+	//Butons_recorder_ahozkoa-exam-'+i+'-level-'+level+'
+	//$('#Butons_recorder_ahozkoa-exam-'+i+'-level-'+level).blur();
+	audio.doStartRecord();
+	
+	
+}
+function stopVoice(level,exam){
+	//$("#button-"+i+"-1-1").blur();
+	var fileFolder=fileFolderAhozkoaVoice;
+	if(userNow!=null){
+		var fileName="voice_ahozkoa_userName_"+userNow.name+"_level_"+level+"_exam_"+exam+".3gp";
+		audio.doStopRecordAsync(
+			fileFolder,
+			fileName,
+			//Se ejecuta si ha ido todo bien
+			function () {
+				var file=audio.fileFolder+audio.fileName;//Guardar la ubicación del fichero de solución donde corresponda, según el ejercicio
+				alert("Audio in: "+file);
+				$('#file_voice_p_ahozkoa-exam-'+exam+'-level-'+level).text("File save:"+file);
+				$('#file_voice_p_ahozkoa-exam-'+exam+'-level-'+level).show();
+				//file_voice_audio_ahozkoa-exam-'+i+'-level-'+level+'
+				$('#file_voice_audio_ahozkoa-exam-'+exam+'-level-'+level).attr("src",file);
+				$('#file_voice_audio_ahozkoa-exam-'+exam+'-level-'+level).show();
+			}
+		);
+	}
+}
+
+var audio = {
+		media:null,
+		fileFolder:null,
+		fileName:null,
+		//debemos crear un objeto medio sobre el que trabajar
+		create: function(fileFolder,fileName) {
+			this.fileFolder=fileFolder;
+			this.fileName=fileName;
+			if(this.media){
+				//Liveramos si existe un objeto media usado
+				this.media.release();
+			}
+				
+			this.media=new Media(this.fileFolder+this.fileName);//Crear nuevo objeto media del fichero fileName de fileFolder y guardarlo en el atributo media
+		},
+		//metodo para empezar a grabar
+		doStartRecord: function() {
+			this.create("cdvfile://sdcard/","tmprecording.3gp");//Crear nuevo objeto para el atributo media, del fichero "tmprecording.3gp" de la carpeta por defecto
+			if(this.media) {
+				this.media.startRecord();//Comenzar a grabar con el objeto del atributo media
+			}else {
+
+				alert("No media file to record");
+			}	
+
+		},
+		//Se le pasa la carpeta donde queremos guardado, lo que queremos que se ejecute una vez grabado
+		doStopRecordAsync: function(fileFolder,fileName,onSuccess) {
+			if(this.media) {
+		        var s=this.media.stopRecord();//Dejar de grabar con el objeto del atributo media
+				fileUtilities.moveAsync(
+						"/sdcard/tmprecording.3gp",fileFolder,fileName,//Mover el fichero de grabación creado "/sdcard/tmprecording.3gp", a la carpeta fileFolder, con nombre fileName
+		        	function() {//función successCallback: si el fichero se ha movido
+							audio.media.release();//Liberar el objeto del atributo media
+						audio.fileFolder=fileFolder;//Guardar en el atributo fileFolder del objeto audio, la carpeta destino
+						audio.fileName=fileName;//Guardar en el atributo fileName del objeto audio, el nuevo nombre del fichero
+						if(onSuccess!=false)
+							onSuccess();
+		        	}
+		        );
+		    }
+			else {
+				alert("No media file to stop");
+			}		
+		}		
+};
+
+
+var fileUtilities = {
+		moveAsync: function (sourceFullPath,destFolder,destName,onSuccess){
+			var url="cdvfile://"+sourceFullPath;
+			var destFile="cdvfile://"+destFolder+destName;
+			var ft=new FileTransfer();//Crear objeto FileTransfer
+		    ft.download(//Copiar (descargar) el fichero indicado por URL en destFile
+				url,
+				destFile,
+		    	function() {//función successCallback: si el fichero se descargó bien
+					window.resolveLocalFileSystemURL(url,//Acceder al fichero original por su URL
+		    				function(fileEntry) {//función successCallback: si se ha podido acceder al fichero original
+								fileEntry.remove(onSuccess);//Borrar el fichero y seguir con onSuccess
+		    				},
+		    				function(error) {
+		    					alert("Source file NOT accesible; not removed");
+		    				}
+		    		);			
+				},
+				function(error) {
+					alert(error.prototype+' File not copied. '+'error.code: '+error.code+'\nerror.source: '+error.source+'\nerror.target: '+error.target+'\nerror.http_status: '+error.http_status);
+				}
+			);
+		}
+};
+
 //AHOZKOA END
 
 //BERRIDAZKETAK INIT

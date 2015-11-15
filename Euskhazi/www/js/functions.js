@@ -134,7 +134,71 @@ function checkSinonimoak(i){
 		alert('ZORIONAK!! Gainditu duzu!');
 	}
 }
+//---------------------ENTZUNEZKOA------------------------
+function loadDataJSONEntzunezkoa(level){
+//	$.getJSON(fileFolder+level+'/'+fileName, function(json) {
+	$.getJSON('exams/'+level+'/Entzunezkoa.json', function(json) {
+	    examsEntzunezkoa=json;
+	});	
+}
 
+function loadEntzunezkoaMenu(){
+	loadDataJSONEntzunezkoa('A2');
+	setTimeout(function() {
+		var $menuEntzunezkoa = pageEntzunezkoa.createMenu(examsEntzunezkoa, 'A2');
+		$("body").append($menuEntzunezkoa);
+		$("body").enhanceWithin();
+		$(':mobile-pagecontainer').pagecontainer('change', '#page_menu_entzunezkoa');
+	}, 50);
+	
+}
+
+function loadExamEntzunezkoa(i){
+	var $examenEntzunezkoa = pageEntzunezkoa.createExam(i, examsEntzunezkoa, 'A2')
+	$("body").append($examenEntzunezkoa);
+	$("body").enhanceWithin();
+	$(':mobile-pagecontainer').pagecontainer('change', '#page-exam-entzunezkoa');
+}
+
+function checkEntzunezkoa(i){
+	var respondidos=0;
+	var correctos=0;
+	for(var con=0;con < examsEntzunezkoa[i].statements.length;con++){
+		var answer=$("input[name='radio-choice-entzunezkoa-"+con+"']:checked").val();
+		if(answer){
+			$("label[id|='label-radio-choice-"+con+"']").each(
+				function(index) {
+					if(index!=examsEntzunezkoa[i].statements[con].solution) {
+						$(this).css("color","red");
+					}
+					else
+						$(this).css({"color":"white","background-color":"green","font-size":"24px"});
+				}
+			);
+			respondidos++;
+			if(answer == examsEntzunezkoa[i].statements[con].solution){
+				correctos++;
+			}
+		}
+	}
+	$('#correct_answer_entzunezkoa').text('Erantzun zuzenak: '+correctos);
+	if(respondidos < examsEntzunezkoa[i].statements.length){
+		alert((examsEntzunezkoa[i].statements.length-respondidos)+' galdera falta zaizkizu erantzuteko');
+		return;
+	}
+	var minimoParaAprobar=examsEntzunezkoa[i].statements.length*(3/5);
+	
+	$buttons=$('#form-entzunezkoa-buttons').empty();
+	backButton='<a id="salir-entzunezkoa-button" href="#page_menu_entzunezkoa" class="ui-btn">Irten</a>';
+	$buttons.append(backButton);
+	
+	if(correctos<minimoParaAprobar){
+		alert('Ez duzu gainditu!');
+		
+	}else{
+		alert('ZORIONAK!! Gainditu duzu!');
+	}
+}
 
 /*function login() { 
 	var loginVal=$("#login").val();

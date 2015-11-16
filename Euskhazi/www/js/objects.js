@@ -252,8 +252,11 @@ var pageEntzunezkoa={
 				'<div data-role="header" data-position="fixed" >'+
 					'<h1 style="margin-left:0;margin-right:0;white-space: nowrap;overflow: visible;">'+'Entzunezkoa '+level+' '+(i+1)+'</h1>'+
 				'</div>';
-			
-			var statementsDivs="";
+				
+			var statementsDivs='<audio controls>'+
+									'<source src="/sdcard/eus.ehu.INTEL901_504021.TTA1516_LS_EX_09v2/audio/Libre.mp3" type="audio/mpeg">'+
+									'Your browser does not support the audio element.'+
+								'</audio>';
 			for(var con=0;con<exams[i].statements.length;con++){
 				statementsDivs+=
 				'<fieldset data-role="controlgroup" data-iconpos="right">'+

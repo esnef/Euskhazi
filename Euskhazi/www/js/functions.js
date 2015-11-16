@@ -291,3 +291,51 @@ function checkAtarikoa(i){
 		alert('ZORIONAK!! Gainditu duzu!');
 	}
 }
+//---------------------SINONIMOAK------------------------
+function loadDataJSONSinonimoak(level){
+	$.getJSON('exams/'+level+'/Sinonimoak.json', function(json) {
+	    examsSinonimoak=json;
+	});	
+}
+function loadSinonimoakMenu(level){
+	loadDataJSONSinonimoak(level);
+	setTimeout(function() {
+		var $menuSinonimoak = pageSinonimoak.createMenu(examsSinonimoak, level);
+		$("body").append($menuSinonimoak);
+		$("body").enhanceWithin();
+		$(':mobile-pagecontainer').pagecontainer('change', '#page_menu_sinonimoak');
+	}, 50);
+	
+}
+function loadExamSinonimoak(i,level){
+	var $examenAtarikoa = pageSinonimoak.createExam(i, examsSinonimoak, level);
+	$("body").append($examenAtarikoa);
+	$("body").enhanceWithin();
+	$(':mobile-pagecontainer').pagecontainer('change', '#page-exam-sinonimoak');
+}
+function checkSinonimoak(i){
+	var correctos=0;
+	for(var con=0;con < examsSinonimoak[i].statements.length;con++){
+		var $answer=$("input[name='answer-sinonimoak-"+con+"']");
+		if($answer.val() !=examsSinonimoak[i].statements[con].solution) {
+			$answer.css("color","red");
+		}
+		else{
+			$answer.css({"color":"white","background-color":"green","font-size":"24px"});
+			correctos++;
+		}
+	}
+	$('#correct_answer_sinonimoak').text('Erantzun zuzenak: '+correctos+'/'+examsSinonimoak[i].statements.length);
+	var minimoParaAprobar=examsSinonimoak[i].statements.length*(3/5);
+	
+	$buttons=$('#form-sinonimoak-buttons').empty();
+	backButton='<a id="salir-sinonimoak-button" href="#page_menu_sinonimoak" class="ui-btn">Irten</a>';
+	$buttons.append(backButton);
+	
+	if(correctos<minimoParaAprobar){
+		alert('Ez duzu gainditu!');
+		
+	}else{
+		alert('ZORIONAK!! Gainditu duzu!');
+	}
+}

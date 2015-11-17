@@ -284,6 +284,7 @@ function checkAtarikoa(i,level){
 	backButton='<a id="salir-atarikoa-button" href="#page_menu_atarikoa" class="ui-btn">Irten</a>';
 	$buttons.append(backButton);
 
+	//se guarda el resultado dentro del usuario
 	var control=false;
 	if(userNow.examsAtarikoa==undefined){
 		userNow.examsAtarikoa=new Array();
@@ -295,17 +296,18 @@ function checkAtarikoa(i,level){
 			break;
 		}
 	}
-	examsAtarikoa=new ResultExamn();
-	examsAtarikoa.level=level;
-	examsAtarikoa.numExam=i;
-	examsAtarikoa.result=correctos;
+	resultadoExamsAtarikoa=new ResultExamn();
+	resultadoExamsAtarikoa.level=level;
+	resultadoExamsAtarikoa.numExam=i;
+	resultadoExamsAtarikoa.result=correctos;
 	if(control){
-		userNow.examsAtarikoa[k]=examsAtarikoa;
+		userNow.examsAtarikoa[k]=resultadoExamsAtarikoa;
 	}else{
-		userNow.examsAtarikoa.push(examsAtarikoa);
+		userNow.examsAtarikoa.push(resultadoExamsAtarikoa);
 	}
 	//Guardamos todas las modificaciones
 	saveUsers();
+
 	if(correctos<minimoParaAprobar){
 		alert('Ez duzu gainditu!');
 		
@@ -335,7 +337,7 @@ function loadExamSinonimoak(i,level){
 	$("body").enhanceWithin();
 	$(':mobile-pagecontainer').pagecontainer('change', '#page-exam-sinonimoak');
 }
-function checkSinonimoak(i){
+function checkSinonimoak(i,level){
 	var correctos=0;
 	for(var con=0;con < examsSinonimoak[i].statements.length;con++){
 		var $answer=$("input[name='answer-sinonimoak-"+con+"']");
@@ -353,6 +355,30 @@ function checkSinonimoak(i){
 	$buttons=$('#form-sinonimoak-buttons').empty();
 	backButton='<a id="salir-sinonimoak-button" href="#page_menu_sinonimoak" class="ui-btn">Irten</a>';
 	$buttons.append(backButton);
+
+	//se guarda el resultado dentro del usuario
+	var control=false;
+	if(userNow.examsSinonimoak==undefined){
+		userNow.examsSinonimoak=new Array();
+	}
+	for(con=0;con<userNow.examsSinonimoak.length;con++){
+		if(userNow.examsSinonimoak[con].level==level && userNow.examsSinonimoak[con].numExam==i){
+			control=true;
+			var k=con;
+			break;
+		}
+	}
+	resultadoExamsSinonimoak=new ResultExamn();
+	resultadoExamsSinonimoak.level=level;
+	resultadoExamsSinonimoak.numExam=i;
+	resultadoExamsSinonimoak.result=correctos;
+	if(control){
+		userNow.examsSinonimoak[k]=resultadoExamsSinonimoak;
+	}else{
+		userNow.examsSinonimoak.push(resultadoExamsSinonimoak);
+	}
+	//Guardamos todas las modificaciones
+	saveUsers();
 	
 	if(correctos<minimoParaAprobar){
 		alert('Ez duzu gainditu!');

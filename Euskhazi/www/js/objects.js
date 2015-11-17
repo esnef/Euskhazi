@@ -1009,8 +1009,24 @@ var pageSinonimoak={
 			var statementsDivs='<ul data-role="listview">';
 			
 			for(var con=0;con<exams.length;con++){
-				statementsDivs=statementsDivs+
-				  '<li><a href="#" onClick="loadExamSinonimoak(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" id="menu_exam_sinonimoak-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
+				if(userNow.examsSinonimoak){
+					var aprobado=false;
+					for(var k=0;k<userNow.examsSinonimoak.length;k++){
+						if(userNow.examsSinonimoak[k].level==level && userNow.examsSinonimoak[k].numExam==con && userNow.examsSinonimoak[k].result>exams[con].statements.length*(3/5)){
+							aprobado=true;
+						}
+					}
+					if(aprobado){
+						statementsDivs=statementsDivs+
+						'<li><a href="#" onClick="loadExamSinonimoak(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" id="menu_exam_sinonimoak-'+level+'-'+con+'">'+'Azterketa aprobatuta '+(con+1)+'</a></li>';
+					}else{
+						statementsDivs=statementsDivs+
+						'<li><a href="#" onClick="loadExamSinonimoak(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" id="menu_exam_sinonimoak-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
+					}
+				}else{
+					statementsDivs=statementsDivs+
+					'<li><a href="#" onClick="loadExamSinonimoak(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" id="menu_exam_sinonimoak-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
+				}
 			}
 			
 			statementsDivs=statementsDivs+'</ul>';
@@ -1055,7 +1071,7 @@ var pageSinonimoak={
 				'</fieldset>';
 			}
 			statementsDivs=statementsDivs+'<div id="form-sinonimoak-buttons">';
-			statementsDivs=statementsDivs+'<a id="correctExams_sinonimoak" name="onClickCorrectExams" href="" onClick="checkSinonimoak(&#39;'+i+'&#39;)" class="ui-btn">Zuzendu</a>'
+			statementsDivs=statementsDivs+'<a id="correctExams_sinonimoak" name="onClickCorrectExams" href="" onClick="checkSinonimoak(&#39;'+i+'&#39;,&#39;'+level+'&#39;)" class="ui-btn">Zuzendu</a>'
 			statementsDivs=statementsDivs+'</div>';
 			statementsDivs='<form id="form-sinonimoak">'+statementsDivs+'</form>';
 			

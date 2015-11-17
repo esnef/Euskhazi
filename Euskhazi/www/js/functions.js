@@ -252,7 +252,7 @@ function loadExamAtarikoa(i,level){
 	$(':mobile-pagecontainer').pagecontainer('change', '#page-exam-atarikoa-'+i);
 }
 
-function checkAtarikoa(i){
+function checkAtarikoa(i,level){
 	var respondidos=0;
 	var correctos=0;
 	for(var con=0;con < examsAtarikoa[i].statements.length;con++){
@@ -283,7 +283,29 @@ function checkAtarikoa(i){
 	$buttons=$('#form-atarikoa-buttons').empty();
 	backButton='<a id="salir-atarikoa-button" href="#page_menu_atarikoa" class="ui-btn">Irten</a>';
 	$buttons.append(backButton);
-	
+
+	var control=false;
+	if(userNow.examsAtarikoa==undefined){
+		userNow.examsAtarikoa=new Array();
+	}
+	for(con=0;con<userNow.examsAtarikoa.length;con++){
+		if(userNow.examsAtarikoa[con].level==level && userNow.examsAtarikoa[con].numExam==i){
+			control=true;
+			var k=con;
+			break;
+		}
+	}
+	examsAtarikoa=new ResultExamn();
+	examsAtarikoa.level=level;
+	examsAtarikoa.numExam=i;
+	examsAtarikoa.result=correctos;
+	if(control){
+		userNow.examsAtarikoa[k]=examsAtarikoa;
+	}else{
+		userNow.examsAtarikoa.push(examsAtarikoa);
+	}
+	//Guardamos todas las modificaciones
+	saveUsers();
 	if(correctos<minimoParaAprobar){
 		alert('Ez duzu gainditu!');
 		
@@ -295,7 +317,7 @@ function checkAtarikoa(i){
 function loadDataJSONSinonimoak(level){
 	$.getJSON('exams/'+level+'/Sinonimoak.json', function(json) {
 	    examsSinonimoak=json;
-	});	
+	});
 }
 function loadSinonimoakMenu(level){
 	loadDataJSONSinonimoak(level);

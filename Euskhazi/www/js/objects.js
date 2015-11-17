@@ -898,8 +898,24 @@ var pageAtarikoa={
 			var statementsDivs='<ul data-role="listview">';
 			
 			for(var con=0;con<exams.length;con++){
-				statementsDivs=statementsDivs+
-				  '<li><a href="#" onClick="loadExamAtarikoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" id="menu_exam_atarikoa-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
+				if(userNow.examsAtarikoa){
+					var aprobado=false;
+					for(var k=0;k<userNow.examsAtarikoa.length;k++){
+						if(userNow.examsAtarikoa[k].level==level && userNow.examsAtarikoa[k].numExam==con && userNow.examsAtarikoa[k].result>exams[con].statements.length*(3/4)){
+							aprobado=true;
+						}
+					}
+					if(aprobado){
+						statementsDivs=statementsDivs+
+					  '<li><a href="#" onClick="loadExamAtarikoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" id="menu_exam_atarikoa-'+level+'-'+con+'">'+'Azterketa gainditua'+(con+1)+'</a></li>';
+					}else{
+						statementsDivs=statementsDivs+
+					  '<li><a href="#" onClick="loadExamAtarikoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" id="menu_exam_atarikoa-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
+					}
+				}else{
+					statementsDivs=statementsDivs+
+					  '<li><a href="#" onClick="loadExamAtarikoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" id="menu_exam_atarikoa-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
+				}
 			}
 			
 			statementsDivs=statementsDivs+'</ul>';
@@ -951,7 +967,7 @@ var pageAtarikoa={
 				'</fieldset>';
 			}
 			statementsDivs=statementsDivs+'<div id="form-atarikoa-buttons">';
-			statementsDivs=statementsDivs+'<a id="correctExams_atarikoa" name="onClickCorrectExams" href="" onClick="checkAtarikoa(&#39;'+i+'&#39;)" class="ui-btn">Zuzendu</a>'
+			statementsDivs=statementsDivs+'<a id="correctExams_atarikoa" name="onClickCorrectExams" href="" onClick="checkAtarikoa(&#39;'+i+'&#39;,&#39;'+level+'&#39;)" class="ui-btn">Zuzendu</a>'
 			statementsDivs=statementsDivs+'<a style="display:none;" id="salir-atarikoa-button" href="#page_menu_atarikoa" class="ui-btn">Irten</a>'
 			statementsDivs=statementsDivs+'</div>';
 			statementsDivs='<form id="form-atarikoa">'+statementsDivs+'</form>';

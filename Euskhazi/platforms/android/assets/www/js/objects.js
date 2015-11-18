@@ -55,7 +55,7 @@ var fileFolderAhozkoaVoice="/sdcard/Euskhazi/voice/";
 
 //var level="B1";
 var exams=null;
-/*
+
 //IDATZIKOA INIT
 function loadDataJSONIdatzizkoa(fileName,level){
 	$.getJSON(fileFolder+level+'/'+fileName, function(json) {
@@ -88,10 +88,8 @@ function loadDataJSONIdatzizkoa(fileName,level){
 		    //Se ejecutara cuando se presiona el boton de corrección
 		    
 		    $( "a[name='onClickCorrectExamsIdatzizkoa']" ).on( "click", function() {
-		    	alert("g1");
 		    	var id=$(this).attr("id");
 		    	if (id.indexOf('correctExams_a_')!=-1 && id.indexOf('idatzizkoa')!=-1) {
-		    		alert("g2");
 		    		var positionNumExam =id.indexOf('exam-')+'exam-'.length;
 		    		var numExam=id[positionNumExam];
 		    		var positionlevelExam =id.indexOf('level-')+'level-'.length;
@@ -188,7 +186,7 @@ var pageIdatzizkoa={
 					'<div class="ui-grid-b">'+
 						'<div class="ui-block-a" style="text-align:left;width:20%;">'+
 						'</div>'+
-						'<div class="ui-block-b" style="text-align:center;width:60%;"><h4 style="margin-bottom:1%;"></h4></div>'+
+						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#authentication_page" class="ui-btn ui-btn-inline ui-corner-all" >Irten</a></li></ul>'+'</div>'+
 						'<div class="ui-block-c" style="text-align:right;width:20%;">'+
 						'</div>'+
 					'</div>'+
@@ -283,7 +281,7 @@ function loadIdatzizkoa(level){
 }
 
 //IDATZIZKOA END
-*/
+
 //AHOZKOA INIT
 function loadDataJSONAhozkoa(fileName,level){
 	$.getJSON(fileFolder+level+'/'+fileName, function(json) {
@@ -426,7 +424,7 @@ var pageAhozkoa={
 			
 			statementsDivs=statementsDivs+'</ul>';
 
-			statementsDivs+='<br><br><ul data-role="listview"><li><a href="#tests_page_menu_level_'+level+'"class="ui-btn ui-btn-inline ui-corner-all" >Atzera</a></li></ul>';
+			
 			
 			var contentDiv=
 				'<div data-role="content">'+statementsDivs+'</div>';
@@ -435,7 +433,7 @@ var pageAhozkoa={
 					'<div class="ui-grid-b">'+
 						'<div class="ui-block-a" style="text-align:left;width:20%;">'+
 						'</div>'+
-						'<div class="ui-block-b" style="text-align:center;width:60%;"><h4 style="margin-bottom:1%;"></h4></div>'+
+						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#authentication_page" class="ui-btn ui-btn-inline ui-corner-all" >Irten</a></li></ul>'+'</div>'+
 						'<div class="ui-block-c" style="text-align:right;width:20%;">'+
 						'</div>'+
 					'</div>'+
@@ -891,7 +889,7 @@ var pageBerridazketak={
 			
 			statementsDivs=statementsDivs+'</ul>';
 
-			statementsDivs+='<br><br><ul data-role="listview"><li><a href="#tests_page_menu_level_'+level+'"class="ui-btn ui-btn-inline ui-corner-all" >Atzera</a></li></ul>';
+			
 			
 			var contentDiv=
 				'<div data-role="content">'+statementsDivs+'</div>';
@@ -900,7 +898,7 @@ var pageBerridazketak={
 					'<div class="ui-grid-b">'+
 						'<div class="ui-block-a" style="text-align:left;width:20%;">'+
 						'</div>'+
-						'<div class="ui-block-b" style="text-align:center;width:60%;"><h4 style="margin-bottom:1%;"></h4></div>'+
+						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#authentication_page" class="ui-btn ui-btn-inline ui-corner-all" >Irten</a></li></ul>'+'</div>'+
 						'<div class="ui-block-c" style="text-align:right;width:20%;">'+
 						'</div>'+
 					'</div>'+
@@ -1016,7 +1014,7 @@ var pageLeves={
 			
 			statementsDivs=statementsDivs+'</ul>';
 
-			statementsDivs+='<br><br><ul data-role="listview"><li><a href="#authentication_page" class="ui-btn ui-btn-inline ui-corner-all" >Irten</a></li></ul>';
+			 
 			
 			var contentDiv=
 				'<div data-role="content">'+statementsDivs+'</div>';
@@ -1025,7 +1023,7 @@ var pageLeves={
 					'<div class="ui-grid-b">'+
 						'<div class="ui-block-a" style="text-align:left;width:20%;">'+
 						'</div>'+
-						'<div class="ui-block-b" style="text-align:center;width:60%;"><h4 style="margin-bottom:1%;"></h4></div>'+
+						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#authentication_page" class="ui-btn ui-btn-inline ui-corner-all" >Irten</a></li></ul>'+'</div>'+
 						'<div class="ui-block-c" style="text-align:right;width:20%;">'+
 						'</div>'+
 					'</div>'+
@@ -1092,7 +1090,6 @@ var pageExams={
 				  '<li><a href="#" onClick="loadAhozkoa(&#39;'+level+'&#39;)" id="levels_li_menu_tests_level_'+level+'-proof-'+'entzumena'+'">'+'Ahozkoa'+'</a></li>';
 			statementsDivs=statementsDivs+'</ul>';
 
-			statementsDivs+='<br><br><ul data-role="listview"><li><a href="#levels_page_menu" class="ui-btn ui-btn-inline ui-corner-all" >Atzera</a></li></ul>';
 			
 			var contentDiv=
 				'<div data-role="content">'+statementsDivs+'</div>';
@@ -1101,7 +1098,7 @@ var pageExams={
 					'<div class="ui-grid-b">'+
 						'<div class="ui-block-a" style="text-align:left;width:20%;">'+
 						'</div>'+
-						'<div class="ui-block-b" style="text-align:center;width:60%;"><h4 style="margin-bottom:1%;"></h4></div>'+
+						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#levels_page_menu" class="ui-btn ui-btn-inline ui-corner-all" >Atzera</a></li></ul>'+
 						'<div class="ui-block-c" style="text-align:right;width:20%;">'+
 						'</div>'+
 					'</div>'+
@@ -1160,7 +1157,7 @@ var pageAtarikoa={
 			
 			statementsDivs=statementsDivs+'</ul>';
 
-			statementsDivs+='<br><br><ul data-role="listview"><li><a href="#tests_page_menu_level_'+level+'"class="ui-btn ui-btn-inline ui-corner-all" >Atzera</a></li></ul>';
+			
 			
 			var contentDiv=
 				'<div data-role="content">'+statementsDivs+'</div>';
@@ -1169,7 +1166,7 @@ var pageAtarikoa={
 					'<div class="ui-grid-b">'+
 						'<div class="ui-block-a" style="text-align:left;width:20%;">'+
 						'</div>'+
-						'<div class="ui-block-b" style="text-align:center;width:60%;"><h4 style="margin-bottom:1%;"></h4></div>'+
+						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#authentication_page" class="ui-btn ui-btn-inline ui-corner-all" >Irten</a></li></ul>'+'</div>'+
 						'<div class="ui-block-c" style="text-align:right;width:20%;">'+
 						'</div>'+
 					'</div>'+
@@ -1272,7 +1269,7 @@ var pageSinonimoak={
 			
 			statementsDivs=statementsDivs+'</ul>';
 
-			statementsDivs+='<br><br><ul data-role="listview"><li><a href="#tests_page_menu_level_'+level+'"class="ui-btn ui-btn-inline ui-corner-all" >Atzera</a></li></ul>';
+			
 			
 			var contentDiv=
 				'<div data-role="content">'+statementsDivs+'</div>';
@@ -1281,7 +1278,7 @@ var pageSinonimoak={
 					'<div class="ui-grid-b">'+
 						'<div class="ui-block-a" style="text-align:left;width:20%;">'+
 						'</div>'+
-						'<div class="ui-block-b" style="text-align:center;width:60%;"><h4 style="margin-bottom:1%;"></h4></div>'+
+						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#authentication_page" class="ui-btn ui-btn-inline ui-corner-all" >Irten</a></li></ul>'+'</div>'+
 						'<div class="ui-block-c" style="text-align:right;width:20%;">'+
 						'</div>'+
 					'</div>'+
@@ -1361,7 +1358,7 @@ var pageEntzunezkoa={
 			
 			statementsDivs=statementsDivs+'</ul>';
 
-			statementsDivs+='<br><br><ul data-role="listview"><li><a href="#tests_page_menu_level_'+level+'"class="ui-btn ui-btn-inline ui-corner-all" >Atzera</a></li></ul>';
+			
 			
 			var contentDiv=
 				'<div data-role="content">'+statementsDivs+'</div>';
@@ -1370,7 +1367,7 @@ var pageEntzunezkoa={
 					'<div class="ui-grid-b">'+
 						'<div class="ui-block-a" style="text-align:left;width:20%;">'+
 						'</div>'+
-						'<div class="ui-block-b" style="text-align:center;width:60%;"><h4 style="margin-bottom:1%;"></h4></div>'+
+						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#authentication_page" class="ui-btn ui-btn-inline ui-corner-all" >Irten</a></li></ul>'+'</div>'+
 						'<div class="ui-block-c" style="text-align:right;width:20%;">'+
 						'</div>'+
 					'</div>'+

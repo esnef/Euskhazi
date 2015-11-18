@@ -115,7 +115,7 @@ function loadDataJSONAhozkoa(fileName,level){
 		    				if(control){
 		    					userNow.examsAhozkoa.push(resultExamnNow);
 		    				}
-		    				alert("Grabazioa egin eta zuzenketa gehiagorako datorrena geroztik");
+		    				alert("Grabazioa egin da eta zuzenketarako bidali da");
 		    				//Guardamos todas las modificaciones
 			    			saveUsers();
 			    			//Ya se ha guardado el resultado
@@ -274,7 +274,7 @@ var pageAhozkoa={
 				'<h4>Termino:</h4><p><i>'+exams[i].conditions+'</i></p>';
 				
 			
-				statementsDivs=statementsDivs+'<a id="correctExams_a_'+'ahozkoa'+'-exam-'+i+'-level-'+level+'" name="onClickCorrectExamsAhozkoa" href="" class="ui-btn">Zuzena</a>'
+				statementsDivs=statementsDivs+'<a id="correctExams_a_'+'ahozkoa'+'-exam-'+i+'-level-'+level+'" name="onClickCorrectExamsAhozkoa" href="" class="ui-btn">Zuzendu</a>'
 			statementsDivs=statementsDivs+
 			'</div>';
 			var contentDiv=
@@ -300,7 +300,7 @@ var pageAhozkoa={
 
 function loadAhozkoa(level){
 	if(level==null){
-		alert("Error en el nivel de examen");
+		alert("Errorrea azterketaren mailan");
 	}
 	loadDataJSONAhozkoa(fileNameAhozkoa,level);
 }
@@ -471,11 +471,11 @@ function loadDataJSONBerridazketak(fileName,level){
 		    			    	}
 		    			    }
 		    			  });
-		    			$('#example_h4_correct_answer_berridazketa-exam-'+numExam+'').text("Erantzun zuzena:"+successes);
+		    			$('#example_h4_correct_answer_berridazketa-exam-'+numExam+'').text("Erantzun zuzenak: "+successes);
 		    			//En el caso de que successes sea mayor a la mitad de las presntas se dara por superiado el examen
     			    	if(successes>=((exams[numExam].statements.length/2)+1)){	
     			    		var resultExam=10*(successes/(exams[numExam].statements.length));
-    			    		alert("Azterketa gainditu ditu "+resultExam+" puntu eman");
+    			    		alert("Azterketa gainditu duzu "+resultExam+" punturekin");
     			    		//Guardamos el resultado para indicar que ha sido superado el examen
     			    		if(userNow!=null){
     			    			//examsBerridazketak
@@ -554,7 +554,7 @@ function loadDataJSONBerridazketak(fileName,level){
 		    			    	}
 		    			    }
 		    			  });
-		    			$('#example_h4_correct_answer_berridazketa-exam-'+numExam+'').text("Erantzun zuzena:"+successes);
+		    			$('#example_h4_correct_answer_berridazketa-exam-'+numExam+'').text("Erantzun zuzenak: "+successes);
 		    		}else{
 		    			alert("Error 11");
 		    		}
@@ -587,7 +587,7 @@ function loadDataJSONBerridazketak(fileName,level){
 	    						if(examsBerridazketakNow[con].result>=6){
 		    						//Aprobado ponemos en azul
 		    						$(this).css('color', 'blue');
-		    						$(this).text("Azterketa "+(index+1)+" Puntuazio:"+examsBerridazketakNow[con].result);
+		    						$(this).text("Azterketa "+(index+1)+" Puntuazioa: "+examsBerridazketakNow[con].result);
 		    						
 		    					}else{
 		    						//Suspendido ponemos en rojo
@@ -703,8 +703,8 @@ var pageBerridazketak={
 				'</div>'
 				;
 			}
-			statementsDivs=statementsDivs+'<a id="correctExams_a_'+'berridazketa'+'-exam-'+i+'-level-'+level+'" name="onClickCorrectExams" href="" class="ui-btn">Zuzena</a>'
-			statementsDivs=statementsDivs+'<a id="correctExams_a_showSolution'+'berridazketa'+'-exam-'+i+'-level-'+level+'" name="onClickShowSolution" href="" class="ui-btn">Ikusi Soluzio</a>'
+			statementsDivs=statementsDivs+'<a id="correctExams_a_'+'berridazketa'+'-exam-'+i+'-level-'+level+'" name="onClickCorrectExams" href="" class="ui-btn">Zuzendu</a>'
+			statementsDivs=statementsDivs+'<a id="correctExams_a_showSolution'+'berridazketa'+'-exam-'+i+'-level-'+level+'" name="onClickShowSolution" href="" class="ui-btn">Ikusi soluzioak</a>'
 			
 			var contentDiv=
 				'<div data-role="content">'+statementsDivs+'</div>';
@@ -713,7 +713,7 @@ var pageBerridazketak={
 					'<div class="ui-grid-b">'+
 						'<div class="ui-block-a" style="text-align:left;align-content:center;width:20%;">'+
 						'</div>'+
-						'<div class="ui-block-b" style="text-align:center;align-content:center;width:60%;"><h4 id="example_h4_correct_answer_berridazketa-exam-'+i+'" style="margin-bottom:1%;">Erantzun zuzena:0</h4></div>'+
+						'<div class="ui-block-b" style="text-align:center;align-content:center;width:60%;"><h4 id="example_h4_correct_answer_berridazketa-exam-'+i+'" style="margin-bottom:1%;">Erantzun zuzenak: 0</h4></div>'+
 						'<div class="ui-block-c" style="text-align:right;align-content:center;width:20%;">'+
 						'</div>'+
 					'</div>'+
@@ -730,7 +730,7 @@ var pageBerridazketak={
 
 function loadBerridazketak(level){
 	if(level==null){
-		alert("Error en el nivel de examen");
+		alert("Errorea azterketaren mailan");
 	}
 	loadDataJSONBerridazketak(fileNameBerridazketak,level);
 }
@@ -761,7 +761,7 @@ var pageLeves={
 			var pageDiv=$('<div data-role="page" id="levels_page_menu" name="levels_page_menu"></div>');
 			var headerDiv=
 				'<div data-role="header" data-position="fixed" >'+
-					'<h1 style="margin-left:0;margin-right:0;white-space: nowrap;overflow: visible;">'+'Euskal mailak Erabiltzaileak:'+userNow.name+'</h1>'+
+					'<h1 style="margin-left:0;margin-right:0;white-space: nowrap;overflow: visible;">'+'Hizkuntza mailak - Erabiltzailea: '+userNow.name+'</h1>'+
 				'</div>';
 			
 			
@@ -814,7 +814,7 @@ var pageLeves={
 
 function loadPageExams(level){
 	if(level==null){
-		alert("Error en el nivel de examen");
+		alert("Errorea azterketaren mailan");
 		return;
 	}
 	var pageDiv=pageExams.create(level);
@@ -834,7 +834,7 @@ function loadPageExams(level){
 var pageExams={
 		create: function(level){
 			if(level==null || level==""){
-				alert("Error al crear el menu de examenes");
+				alert("Errorea azterketen menua sortzerakoan");
 			}
 			var pageDiv=$('<div data-role="page" id="tests_page_menu_level_'+level+'" name="tests_page_menu_level_'+level+'"></div>');
 			var headerDiv=
@@ -855,7 +855,7 @@ var pageExams={
 				statementsDivs=statementsDivs+
 				  '<li><a href="#" onClick="loadBerridazketak(&#39;'+level+'&#39;)" id="levels_li_menu_tests_level_'+level+'-proof-'+'berridazketak'+'">'+'Berridazketak'+'</a></li>';
 				statementsDivs=statementsDivs+
-				  '<li><a href="#" onClick="loadEntzunezkoaMenu(&#39;'+level+'&#39;)" id="levels_li_menu_tests_level_'+level+'-proof-'+'entzumena'+'">'+'Entzumena'+'</a></li>';
+				  '<li><a href="#" onClick="loadEntzunezkoaMenu(&#39;'+level+'&#39;)" id="levels_li_menu_tests_level_'+level+'-proof-'+'entzumena'+'">'+'Entzunezkoa'+'</a></li>';
 				statementsDivs=statementsDivs+
 				  '<li><a href="#" onClick="loadAhozkoa(&#39;'+level+'&#39;)" id="levels_li_menu_tests_level_'+level+'-proof-'+'entzumena'+'">'+'Ahozkoa'+'</a></li>';
 			statementsDivs=statementsDivs+'</ul>';
@@ -915,10 +915,10 @@ var pageAtarikoa={
 					}
 					if(aprobado){
 						statementsDivs=statementsDivs+
-					  '<li><a href="#" onClick="loadExamAtarikoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" id="menu_exam_atarikoa-'+level+'-'+con+'">'+'Azterketa gainditua'+(con+1)+'</a></li>';
+					  '<li><a href="#" onClick="loadExamAtarikoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" style="color:#0000ff;" id="menu_exam_atarikoa-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
 					}else{
 						statementsDivs=statementsDivs+
-					  '<li><a href="#" onClick="loadExamAtarikoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" id="menu_exam_atarikoa-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
+					  '<li><a href="#" onClick="loadExamAtarikoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" style="color:#cc0000;" id="menu_exam_atarikoa-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
 					}
 				}else{
 					statementsDivs=statementsDivs+
@@ -1027,10 +1027,10 @@ var pageSinonimoak={
 					}
 					if(aprobado){
 						statementsDivs=statementsDivs+
-						'<li><a href="#" onClick="loadExamSinonimoak(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" id="menu_exam_sinonimoak-'+level+'-'+con+'">'+'Azterketa aprobatuta '+(con+1)+'</a></li>';
+						'<li><a href="#" onClick="loadExamSinonimoak(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" style="color:#0000ff;" id="menu_exam_sinonimoak-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
 					}else{
 						statementsDivs=statementsDivs+
-						'<li><a href="#" onClick="loadExamSinonimoak(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" id="menu_exam_sinonimoak-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
+						'<li><a href="#" onClick="loadExamSinonimoak(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" style="color:#cc0000;" id="menu_exam_sinonimoak-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
 					}
 				}else{
 					statementsDivs=statementsDivs+
@@ -1162,7 +1162,6 @@ var pageEntzunezkoa={
 					'<h1 style="margin-left:0;margin-right:0;white-space: nowrap;overflow: visible;">'+'Entzunezkoa '+level+' '+(i+1)+'</h1>'+
 				'</div>';
 
-			
 			var statementsDivs='<audio controls>'+
 									// '<source src="/sdcard/eus.ehu.INTEL901_504021.TTA1516_LS_EX_09v2/audio/Libre.mp3" type="audio/mpeg">'+
 									'<source src="file:///android_asset/www/'+exams[i].audioUrl+'.mp3" type="audio/mpeg">'+

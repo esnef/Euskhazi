@@ -193,6 +193,8 @@ var pageAhozkoa={
 			}
 			
 			statementsDivs=statementsDivs+'</ul>';
+
+			statementsDivs+='<br><br><ul data-role="listview"><li><a href="#tests_page_menu_level_'+level+'"class="ui-btn ui-btn-inline ui-corner-all" >Atzera</a></li></ul>';
 			
 			var contentDiv=
 				'<div data-role="content">'+statementsDivs+'</div>';
@@ -656,6 +658,8 @@ var pageBerridazketak={
 			}
 			
 			statementsDivs=statementsDivs+'</ul>';
+
+			statementsDivs+='<br><br><ul data-role="listview"><li><a href="#tests_page_menu_level_'+level+'"class="ui-btn ui-btn-inline ui-corner-all" >Atzera</a></li></ul>';
 			
 			var contentDiv=
 				'<div data-role="content">'+statementsDivs+'</div>';
@@ -779,6 +783,8 @@ var pageLeves={
 			//}
 			
 			statementsDivs=statementsDivs+'</ul>';
+
+			statementsDivs+='<br><br><ul data-role="listview"><li><a href="#authentication_page" class="ui-btn ui-btn-inline ui-corner-all" >Irten</a></li></ul>';
 			
 			var contentDiv=
 				'<div data-role="content">'+statementsDivs+'</div>';
@@ -853,6 +859,8 @@ var pageExams={
 				statementsDivs=statementsDivs+
 				  '<li><a href="#" onClick="loadAhozkoa(&#39;'+level+'&#39;)" id="levels_li_menu_tests_level_'+level+'-proof-'+'entzumena'+'">'+'Ahozkoa'+'</a></li>';
 			statementsDivs=statementsDivs+'</ul>';
+
+			statementsDivs+='<br><br><ul data-role="listview"><li><a href="#levels_page_menu" class="ui-btn ui-btn-inline ui-corner-all" >Atzera</a></li></ul>';
 			
 			var contentDiv=
 				'<div data-role="content">'+statementsDivs+'</div>';
@@ -919,6 +927,8 @@ var pageAtarikoa={
 			}
 			
 			statementsDivs=statementsDivs+'</ul>';
+
+			statementsDivs+='<br><br><ul data-role="listview"><li><a href="#tests_page_menu_level_'+level+'"class="ui-btn ui-btn-inline ui-corner-all" >Atzera</a></li></ul>';
 			
 			var contentDiv=
 				'<div data-role="content">'+statementsDivs+'</div>';
@@ -968,7 +978,6 @@ var pageAtarikoa={
 			}
 			statementsDivs=statementsDivs+'<div id="form-atarikoa-buttons">';
 			statementsDivs=statementsDivs+'<a id="correctExams_atarikoa" name="onClickCorrectExams" href="" onClick="checkAtarikoa(&#39;'+i+'&#39;,&#39;'+level+'&#39;)" class="ui-btn">Zuzendu</a>'
-			statementsDivs=statementsDivs+'<a style="display:none;" id="salir-atarikoa-button" href="#page_menu_atarikoa" class="ui-btn">Irten</a>'
 			statementsDivs=statementsDivs+'</div>';
 			statementsDivs='<form id="form-atarikoa">'+statementsDivs+'</form>';
 			
@@ -1030,6 +1039,8 @@ var pageSinonimoak={
 			}
 			
 			statementsDivs=statementsDivs+'</ul>';
+
+			statementsDivs+='<br><br><ul data-role="listview"><li><a href="#tests_page_menu_level_'+level+'"class="ui-btn ui-btn-inline ui-corner-all" >Atzera</a></li></ul>';
 			
 			var contentDiv=
 				'<div data-role="content">'+statementsDivs+'</div>';
@@ -1117,6 +1128,8 @@ var pageEntzunezkoa={
 			}
 			
 			statementsDivs=statementsDivs+'</ul>';
+
+			statementsDivs+='<br><br><ul data-role="listview"><li><a href="#tests_page_menu_level_'+level+'"class="ui-btn ui-btn-inline ui-corner-all" >Atzera</a></li></ul>';
 			
 			var contentDiv=
 				'<div data-role="content">'+statementsDivs+'</div>';
@@ -1148,6 +1161,8 @@ var pageEntzunezkoa={
 				'<div data-role="header" data-position="fixed" >'+
 					'<h1 style="margin-left:0;margin-right:0;white-space: nowrap;overflow: visible;">'+'Entzunezkoa '+level+' '+(i+1)+'</h1>'+
 				'</div>';
+
+			
 			var statementsDivs='<audio controls>'+
 									// '<source src="/sdcard/eus.ehu.INTEL901_504021.TTA1516_LS_EX_09v2/audio/Libre.mp3" type="audio/mpeg">'+
 									'<source src="file:///android_asset/www/'+exams[i].audioUrl+'.mp3" type="audio/mpeg">'+

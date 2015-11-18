@@ -28,6 +28,7 @@ function User() {
 	  var pass="";
 	  var examsBerridazketak=new Array();
 	  var examsAhozkoa=new Array();
+	  var examsIdatzizkoa=new Array();
 }
 /**
  * clase para gurdar los resultados de los examenes, se usa 
@@ -38,6 +39,7 @@ function ResultExamn(){
 		var numExam=-1.1;
 		var result=-1.1;
 		var voiceFileName="";
+		var idatzizkoa="";
 }
 var userNow=new User();//Usuario actual del sistema
 userNow.name="";
@@ -48,10 +50,242 @@ userNow.examsBerridazketak=new Array();
 var fileFolder="exams/";
 var fileNameBerridazketak="berridazketak.json";
 var fileNameAhozkoa="ahozkoa.json";
+var fileNameIdatzizkoa="idatzizkoa.json";
 var fileFolderAhozkoaVoice="/sdcard/Euskhazi/voice/";
 
 //var level="B1";
 var exams=null;
+
+
+
+//IDATZIKOA INIT
+function loadDataJSONIdatzizkoa(fileName,level){
+	$.getJSON(fileFolder+level+'/'+fileName, function(json) {
+	    console.log(json); // this will show the info it in firebug console
+	    exams=json;
+	    
+	    exams=json;
+	    var pageDiv;
+	    pageDiv=pageIdatzizkoa.createMenu(exams,level);
+    	//No se puede concatenar pageDiv con lo que se debe introducir cada una de las veces como valores independientes 
+	    $("body").append(pageDiv);
+	    console.log(pageDiv);
+	    //Creamos todos los div pertinentes de los examenes Berridazketak
+	    for(var con=0;con<exams.length;con++){
+	    	//No se puede concatenar pageDiv con lo que se debe introducir cada una de las veces como valores independientes 
+	    	pageDiv=pageIdatzizkoa.create(con,exams,level);
+	    	//alert(""+pageDiv);
+	    	$("body").append(pageDiv);
+	    }
+	    console.log(pageDiv);
+	    //Los introducimos en el body
+
+	    $("body").enhanceWithin();
+	    
+	    //Ahora realizamos el cambio de pantalla a la del menu de examenes
+	    if( $('#example_page_menu_exams_idatzizkoa-level-'+level+'').length )         // use this if you are using id to check
+	    {
+	    	//Existe.
+		    $(':mobile-pagecontainer').pagecontainer('change', '#example_page_menu_exams_idatzizkoa-level-'+level+'');
+		    //Se ejecutara cuando se presiona el boton de corrección
+		    
+		    $( "a[name='onClickCorrectExamsIdatzizkoa']" ).on( "click", function() {
+		    	alert("g1");
+		    	var id=$(this).attr("id");
+		    	if (id.indexOf('correctExams_a_')!=-1 && id.indexOf('idatzizkoa')!=-1) {
+		    		alert("g2");
+		    		var positionNumExam =id.indexOf('exam-')+'exam-'.length;
+		    		var numExam=id[positionNumExam];
+		    		var positionlevelExam =id.indexOf('level-')+'level-'.length;
+		    		var levelExam=id.slice(positionlevelExam,positionlevelExam+2);
+		    		//result_input_idatzizkoa-exam-'+i+'-level-'+level+'
+		    		var $idatzikoa=$('#result_input_idatzizkoa-exam-'+numExam+'-level-'+levelExam);
+		    		//idatzizkoa
+		    		if($idatzikoa.val()!=""){
+		    			if(userNow.examsIdatzizkoa==undefined){
+		    				userNow.examsIdatzizkoa=new Array();
+		    			}
+		    			resultExamnNow=new ResultExamn();
+	    				resultExamnNow.idatzizkoa=$idatzikoa.val();
+	    				resultExamnNow.level=levelExam;
+	    				resultExamnNow.numExam=numExam;
+	    				resultExamnNow.result=0;//DE momento no se tiene un resultado del examen
+	    				var control=true;
+	    				for(var con=0;con<userNow.examsIdatzizkoa.length;con++){
+	    					if(userNow.examsIdatzizkoa[con].level==levelExam && userNow.examsIdatzizkoa[con].numExam==numExam){
+								userNow.examsIdatzizkoa[con]=resultExamnNow
+								control=false;
+								break;
+							}
+						}
+	    				if(control){
+	    					userNow.examsIdatzizkoa.push(resultExamnNow);
+	    				}
+	    				alert("Idazketan egin da. Ontziak zuzendu behar");
+	    				//Guardamos todas las modificaciones
+		    			saveUsers();
+		    			//Ya se ha guardado el resultado
+		    			$.mobile.back();
+		    		}
+		    		
+		    	}
+		    	
+		    });
+		       
+	    }else{
+	    	alert("Error:"+"No exite el ID de dicha pagina");
+	    }
+	    $("div").on( "pageshow", function( event, ui ) {
+    		var idSearch="levels_page_menu";
+    		var id=$(this).attr("id");
+    		if(id==idSearch){
+    			pageAhozkoa.remove(exams,level);
+    		}
+    			
+    	});   
+	    
+	    
+	    
+	});	
+}
+
+var pageIdatzizkoa={
+		
+		remove: function(exams,level){
+			if(exams==null || level==null)return;
+			//.empty(
+			//example_page_menu_exams_berridazketa-level-
+			var idS="example_page_menu_exams_idatzizkoa-level-"+level;
+			$("#"+idS).empty();
+			$("#"+idS).remove();
+
+			for(var con=0;con<exams.length;con++){
+				//example_page_berridazketa-exam-'+i+'-level-'+level+'
+				$('#'+'example_page_idatzizkoa-exam-'+con+'-level-'+level+'').empty();
+				$('#'+'example_page_idatzizkoa-exam-'+con+'-level-'+level+'').remove();
+			}
+		},
+		
+		createMenu: function(exams,level){
+			if(level==null || exams==null){
+				return null;
+			}
+			var pageDiv=$('<div data-role="page" id="example_page_menu_exams_idatzizkoa-level-'+level+'" name="example_page_menu_exams_idatzizkoa-level-'+level+'"></div>');
+			var headerDiv=
+				'<div data-role="header" data-position="fixed" >'+
+					'<h1 style="margin-left:0;margin-right:0;white-space: nowrap;overflow: visible;">'+'Ahozkoak '+level+'</h1>'+
+				'</div>';
+			
+			var statementsDivs='<ul data-role="listview" data-inset="true">';
+			for(var con=0;con<exams.length;con++){
+				statementsDivs=statementsDivs+
+				  '<li><a href="#example_page_idatzizkoa-exam-'+con+'-level-'+level+'" id="example_li_menu_exams_idatzizkoa-level-'+level+'-exams-'+con+'">'+'Azterketa ' +''+(con+1)+'</a></li>';
+			}
+			
+			statementsDivs=statementsDivs+'</ul>';
+			var contentDiv=
+				'<div data-role="content">'+statementsDivs+'</div>';
+			var footerDiv=
+				'<div data-role="footer" data-position="fixed" style="padding-top:1%;">'+
+					'<div class="ui-grid-b">'+
+						'<div class="ui-block-a" style="text-align:left;width:20%;">'+
+						'</div>'+
+						'<div class="ui-block-b" style="text-align:center;width:60%;"><h4 style="margin-bottom:1%;"></h4></div>'+
+						'<div class="ui-block-c" style="text-align:right;width:20%;">'+
+						'</div>'+
+					'</div>'+
+				'</div>';
+			pageDiv.append(headerDiv,contentDiv,footerDiv);
+			return pageDiv;
+		},
+		
+		create: function(i,exams,level){
+			if(exams==null || level==null){
+				alert("No se ha podido presentar en pantalla porque se ha pasado un valor menos a uno");
+				return null;
+			}else if(i>=exams.length){
+				alert("No se puede solicitar un numero de examen superior al que se tiene");
+				return null;
+			}
+			var pageDiv=$('<div data-role="page" id="example_page_idatzizkoa-exam-'+i+'-level-'+level+'"></div>');
+			var headerDiv=
+				'<div data-role="header" data-position="fixed" >'+
+					'<h1 style="margin-left:0;margin-right:0;white-space: nowrap;overflow: visible;">'+'Ahozkoa '+(i+1)+'</h1>'+
+				'</div>';
+			
+			var statementsDivs="";
+			statementsDivs=statementsDivs+
+			'<div id="div_idatzizkoa-exam-'+i+'-level-'+level+'-statement-'+con+'" class="ui-field-contain">';
+				statementsDivs=statementsDivs+
+				'<h3 name="title_p_idatzizkoa-exam-'+i+'-level-'+level+'" id="title_p_idatzizkoa-exam-'+i+'-level-'+level+'">'+exams[i].title+'</h3>'+
+				'<p name="explanation_p_idatzizkoa-exam-'+i+'-level-'+level+'" id="explanation_p_idatzizkoa-exam-'+i+'-level-'+level+'">'+exams[i].explanation+'</p>';	
+				
+				
+				statementsDivs=statementsDivs+
+				'<ul>';
+				for(var con=0;con<exams[i].items.length;con++){
+					statementsDivs=statementsDivs+
+					'<li id="questions_li_idatzizkoa-exam-'+i+'-level-'+level+'-question-'+con+'">'+exams[i].items[con].item+'</li>'
+					;
+				}
+				statementsDivs=statementsDivs+
+				'</ul>';
+				
+				for(var con=0;con<exams[i].imagesURL.length;con++){
+					statementsDivs=statementsDivs+
+					'<div style="width: 100%;">';
+						statementsDivs=statementsDivs+
+						'<img id="imagesURL_img_idatzizkoa-exam-'+i+'-level-'+level+'-img-'+con+'" style="width: 100%;" alt="Photo portrait" src="'+exams[i].imagesURL[con].imageURL+'"/>';
+					statementsDivs=statementsDivs+
+					'</div>';
+				}
+			statementsDivs=statementsDivs+
+			'</div>';
+			
+			statementsDivs=statementsDivs+
+			'<div id="div2_idatzizkoa-exam-'+i+'-level-'+level+'" class="ui-field-contain">';
+
+				statementsDivs=statementsDivs+
+				'<textarea style="width: 100%;" rows="8" name="result_input_idatzizkoa-exam-'+i+'-level-'+level+'" id="result_input_idatzizkoa-exam-'+i+'-level-'+level+'" data-clear-btn="true" value="" placeholder=""/>';
+
+				statementsDivs=statementsDivs+
+				'<h4>Termino:</h4><p><i>'+exams[i].conditions+'</i></p>';
+				
+			
+				statementsDivs=statementsDivs+'<a id="correctExams_a_'+'idatzizkoa'+'-exam-'+i+'-level-'+level+'" name="onClickCorrectExamsIdatzizkoa" href="" class="ui-btn">Zuzena</a>'
+			statementsDivs=statementsDivs+
+			'</div>';
+			var contentDiv=
+				'<div data-role="content">'+statementsDivs+'</div>';
+			var footerDiv=
+				'<div data-role="footer" data-position="fixed" style="padding-top:1%;">'+
+					'<div class="ui-grid-b">'+
+						'<div class="ui-block-a" style="text-align:left;align-content:center;width:20%;">'+
+						'</div>'+
+						'<div class="ui-block-b" style="text-align:center;align-content:center;width:60%;"><h4 id="example_h4_correct_answer_berridazketa-exam-'+i+'" style="margin-bottom:1%;"></h4></div>'+
+						'<div class="ui-block-c" style="text-align:right;align-content:center;width:20%;">'+
+						'</div>'+
+					'</div>'+
+				'</div>';
+			pageDiv.append(headerDiv,contentDiv,footerDiv);
+			return pageDiv;
+		},
+		load: function(i) {
+			alert("load11");
+		}
+			
+};
+
+
+function loadIdatzizkoa(level){
+	if(level==null){
+		alert("Error en el nivel de examen");
+	}
+	loadDataJSONIdatzizkoa(fileNameIdatzizkoa,level);
+}
+
+//IDATZIZKOA END
+
 //AHOZKOA INIT
 function loadDataJSONAhozkoa(fileName,level){
 	$.getJSON(fileFolder+level+'/'+fileName, function(json) {
@@ -92,22 +326,22 @@ function loadDataJSONAhozkoa(fileName,level){
 		    		var numExam=id[positionNumExam];
 		    		var positionlevelExam =id.indexOf('level-')+'level-'.length;
 		    		var levelExam=id.slice(positionlevelExam,positionlevelExam+2);
+		    		var voiceFileName="voice_ahozkoa_userName_"+userNow.name+"_level_"+levelExam+"_exam_"+numExam+".3gp";
 		    		//Ahora debemos comprobar si esta el archivo de la grabacion esta realizado o no
-		    		checkIfFileExists("cdvfile://"+fileFolderAhozkoaVoice,"voice_ahozkoa_userName_"+userNow.name+"_level_"+levelExam+"_exam_"+numExam+".3gp",function(fileEntry){
+		    		checkIfFileExists("cdvfile://"+fileFolderAhozkoaVoice,voiceFileName,function(fileEntry){
 		    			//El archivo existe con lo que podemos realizar el almacenamiento en la variable concreta dentro de UserNow
 		    			if(userNow!=null && userNow!=undefined){
 		    				if(userNow.examsAhozkoa==undefined){
 			    				userNow.examsAhozkoa=new Array();
 			    			}
 		    				resultExamnNow=new ResultExamn();
-		    				resultExamnNow.voiceFileName;
+		    				resultExamnNow.voiceFileName=voiceFileName;
 		    				resultExamnNow.level=levelExam;
 		    				resultExamnNow.numExam=numExam;
 		    				resultExamnNow.result=0;//DE momento no se tiene un resultado del examen
 		    				var control=true;
 		    				for(var con=0;con<userNow.examsAhozkoa.length;con++){
 								if(userNow.examsAhozkoa[con].level==levelExam && userNow.examsAhozkoa[con].numExam==numExam){
-									//userNow.examsAhozkoa.push(userNow.examsBerridazketak[con]);
 									userNow.examsAhozkoa[con]=resultExamnNow
 									control=false;
 									break;
@@ -121,7 +355,6 @@ function loadDataJSONAhozkoa(fileName,level){
 			    			saveUsers();
 			    			//Ya se ha guardado el resultado
 			    			$.mobile.back();
-			    			alert("length:"+userNow.examsAhozkoa.length);
 	    				}
 		    		});
 
@@ -846,7 +1079,7 @@ var pageExams={
 				statementsDivs=statementsDivs+
 				  '<li><a href="#" id="levels_li_menu_tests_level_'+level+'-proof-'+'atarikoa'+'">'+'Atarikoa'+'</a></li>';
 				statementsDivs=statementsDivs+
-				  '<li><a href="#" id="levels_li_menu_tests_level_'+level+'-proof-'+'idatzizkoa'+'">'+'Idatzizkoa'+'</a></li>';
+				  '<li><a href="#" onClick="loadIdatzizkoa(&#39;'+level+'&#39;)" id="levels_li_menu_tests_level_'+level+'-proof-'+'idatzizkoa'+'">'+'Idatzizkoa'+'</a></li>';
 				statementsDivs=statementsDivs+
 				  '<li><a href="#" id="levels_li_menu_tests_level_'+level+'-proof-'+'sinonimoak'+'">'+'Sinonimoak'+'</a></li>';
 				statementsDivs=statementsDivs+

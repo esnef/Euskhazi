@@ -452,3 +452,6 @@ function checkEntzunezkoa(i){
 		alert('ZORIONAK!! Gainditu duzu!');
 	}
 }
+function salirAplicacion(){
+	navigator.app.exitApp();
+}

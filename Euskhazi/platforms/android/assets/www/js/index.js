@@ -45,9 +45,9 @@ var app = {
 			});
         */
 		//Prueba;
-
+        /*
         start();
-        
+        */
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {

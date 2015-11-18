@@ -6,7 +6,7 @@ function login() {
 	newUser.name=loginVal.toString().trim();
 	if(loginVal!=null && loginVal.toString().trim().length != 0){
 		if(checkUser(newUser)){
-			saveNewUser(newUser)
+			saveNewUser(newUser);
 			refreshUsersList();
 			loadUser(newUser.name);
 		}else{
@@ -221,4 +221,237 @@ function advice(pI,qI) {
 		}
 	}
 		
+}
+
+//ATARIKOA INIT
+function loadDataJSONAtarikoa(level){
+//	$.getJSON(fileFolder+level+'/'+fileName, function(json) {
+	$.getJSON('exams/'+level+'/Atarikoa.json', function(json) {
+	    console.log(json); // this will show the info it in firebug console
+	    examsAtarikoa=json;
+//	    examsAtarikoa[0].statements[0].statement;//lehenengo galdera iteko
+//	    examsAtarikoa[0].statements[0].answers[0];//lehenengo galderaren lehenengo erantzuna
+	});	
+}
+
+function loadAtarikoaMenu(level){
+	loadDataJSONAtarikoa(level);
+	setTimeout(function() {
+		var $menuAtarikoa = pageAtarikoa.createMenu(examsAtarikoa, level);
+		$("body").append($menuAtarikoa);
+		$("body").enhanceWithin();
+		$(':mobile-pagecontainer').pagecontainer('change', '#page_menu_atarikoa');
+	}, 50);
+	
+}
+
+function loadExamAtarikoa(i,level){
+	var $examenAtarikoa = pageAtarikoa.createExam(i, examsAtarikoa, level)
+	$("body").append($examenAtarikoa);
+	$("body").enhanceWithin();
+	$(':mobile-pagecontainer').pagecontainer('change', '#page-exam-atarikoa-'+i);
+}
+
+function checkAtarikoa(i,level){
+	var respondidos=0;
+	var correctos=0;
+	for(var con=0;con < examsAtarikoa[i].statements.length;con++){
+		var answer=$("input[name='radio-choice-atarikoa-"+con+"']:checked").val();
+		if(answer){
+			$("label[id|='label-radio-choice-"+con+"']").each(
+				function(index) {
+					if(index!=examsAtarikoa[i].statements[con].solution) {
+						$(this).css("color","red");
+					}
+					else
+						$(this).css({"color":"white","background-color":"green","font-size":"24px"});
+				}
+			);
+			respondidos++;
+			if(answer == examsAtarikoa[i].statements[con].solution){
+				correctos++;
+			}
+		}
+	}
+	$('#correct_answer_atarikoa').text('Erantzun zuzenak: '+correctos);
+	if(respondidos < examsAtarikoa[i].statements.length){
+		alert((examsAtarikoa[i].statements.length-respondidos)+' galdera falta zaizkizu erantzuteko');
+		return;
+	}
+	var minimoParaAprobar=examsAtarikoa[i].statements.length*(3/4);
+	
+	$buttons=$('#form-atarikoa-buttons').empty();
+	backButton='<a id="salir-atarikoa-button" href="#page_menu_atarikoa" class="ui-btn">Irten</a>';
+	$buttons.append(backButton);
+
+	//se guarda el resultado dentro del usuario
+	var control=false;
+	if(userNow.examsAtarikoa==undefined){
+		userNow.examsAtarikoa=new Array();
+	}
+	for(con=0;con<userNow.examsAtarikoa.length;con++){
+		if(userNow.examsAtarikoa[con].level==level && userNow.examsAtarikoa[con].numExam==i){
+			control=true;
+			var k=con;
+			break;
+		}
+	}
+	resultadoExamsAtarikoa=new ResultExamn();
+	resultadoExamsAtarikoa.level=level;
+	resultadoExamsAtarikoa.numExam=i;
+	resultadoExamsAtarikoa.result=correctos;
+	if(control){
+		userNow.examsAtarikoa[k]=resultadoExamsAtarikoa;
+	}else{
+		userNow.examsAtarikoa.push(resultadoExamsAtarikoa);
+	}
+	//Guardamos todas las modificaciones
+	saveUsers();
+
+	if(correctos<minimoParaAprobar){
+		alert('Ez duzu gainditu!');
+		
+	}else{
+		alert('ZORIONAK!! Gainditu duzu!');
+	}
+}
+//---------------------SINONIMOAK------------------------
+function loadDataJSONSinonimoak(level){
+	$.getJSON('exams/'+level+'/Sinonimoak.json', function(json) {
+	    examsSinonimoak=json;
+	});
+}
+function loadSinonimoakMenu(level){
+	loadDataJSONSinonimoak(level);
+	setTimeout(function() {
+		var $menuSinonimoak = pageSinonimoak.createMenu(examsSinonimoak, level);
+		$("body").append($menuSinonimoak);
+		$("body").enhanceWithin();
+		$(':mobile-pagecontainer').pagecontainer('change', '#page_menu_sinonimoak');
+	}, 50);
+	
+}
+function loadExamSinonimoak(i,level){
+	var $examenAtarikoa = pageSinonimoak.createExam(i, examsSinonimoak, level);
+	$("body").append($examenAtarikoa);
+	$("body").enhanceWithin();
+	$(':mobile-pagecontainer').pagecontainer('change', '#page-exam-sinonimoak');
+}
+function checkSinonimoak(i,level){
+	var correctos=0;
+	for(var con=0;con < examsSinonimoak[i].statements.length;con++){
+		var $answer=$("input[name='answer-sinonimoak-"+con+"']");
+		if($answer.val() !=examsSinonimoak[i].statements[con].solution) {
+			$answer.css("color","red");
+		}
+		else{
+			$answer.css({"color":"white","background-color":"green","font-size":"24px"});
+			correctos++;
+		}
+	}
+	$('#correct_answer_sinonimoak').text('Erantzun zuzenak: '+correctos+'/'+examsSinonimoak[i].statements.length);
+	var minimoParaAprobar=examsSinonimoak[i].statements.length*(3/5);
+	
+	$buttons=$('#form-sinonimoak-buttons').empty();
+	backButton='<a id="salir-sinonimoak-button" href="#page_menu_sinonimoak" class="ui-btn">Irten</a>';
+	$buttons.append(backButton);
+
+	//se guarda el resultado dentro del usuario
+	var control=false;
+	if(userNow.examsSinonimoak==undefined){
+		userNow.examsSinonimoak=new Array();
+	}
+	for(con=0;con<userNow.examsSinonimoak.length;con++){
+		if(userNow.examsSinonimoak[con].level==level && userNow.examsSinonimoak[con].numExam==i){
+			control=true;
+			var k=con;
+			break;
+		}
+	}
+	resultadoExamsSinonimoak=new ResultExamn();
+	resultadoExamsSinonimoak.level=level;
+	resultadoExamsSinonimoak.numExam=i;
+	resultadoExamsSinonimoak.result=correctos;
+	if(control){
+		userNow.examsSinonimoak[k]=resultadoExamsSinonimoak;
+	}else{
+		userNow.examsSinonimoak.push(resultadoExamsSinonimoak);
+	}
+	//Guardamos todas las modificaciones
+	saveUsers();
+	
+	if(correctos<minimoParaAprobar){
+		alert('Ez duzu gainditu!');
+		
+	}else{
+		alert('ZORIONAK!! Gainditu duzu!');
+	}
+}
+//---------------------ENTZUNEZKOA------------------------
+function loadDataJSONEntzunezkoa(level){
+//	$.getJSON(fileFolder+level+'/'+fileName, function(json) {
+	$.getJSON('exams/'+level+'/Entzunezkoa.json', function(json) {
+	    examsEntzunezkoa=json;
+	});	
+}
+
+function loadEntzunezkoaMenu(level){
+	loadDataJSONEntzunezkoa(level);
+	setTimeout(function() {
+		var $menuEntzunezkoa = pageEntzunezkoa.createMenu(examsEntzunezkoa, level);
+		$("body").append($menuEntzunezkoa);
+		$("body").enhanceWithin();
+		$(':mobile-pagecontainer').pagecontainer('change', '#page_menu_entzunezkoa');
+	}, 50);
+	
+}
+
+function loadExamEntzunezkoa(i,level){
+	var $examenEntzunezkoa = pageEntzunezkoa.createExam(i, examsEntzunezkoa, level)
+	$("body").append($examenEntzunezkoa);
+	$("body").enhanceWithin();
+	$(':mobile-pagecontainer').pagecontainer('change', '#page-exam-entzunezkoa');
+}
+
+function checkEntzunezkoa(i){
+	var respondidos=0;
+	var correctos=0;
+	for(var con=0;con < examsEntzunezkoa[i].statements.length;con++){
+		var answer=$("input[name='radio-choice-entzunezkoa-"+con+"']:checked").val();
+		if(answer){
+			$("label[id|='label-radio-choice-"+con+"']").each(
+				function(index) {
+					if(index!=examsEntzunezkoa[i].statements[con].solution) {
+						$(this).css("color","red");
+					}
+					else
+						$(this).css({"color":"white","background-color":"green","font-size":"24px"});
+				}
+			);
+			respondidos++;
+			if(answer == examsEntzunezkoa[i].statements[con].solution){
+				correctos++;
+			}
+		}
+	}
+	$('#correct_answer_entzunezkoa').text('Erantzun zuzenak: '+correctos);
+	if(respondidos < examsEntzunezkoa[i].statements.length){
+		alert((examsEntzunezkoa[i].statements.length-respondidos)+' galdera falta zaizkizu erantzuteko');
+		return;
+	}
+	var minimoParaAprobar=examsEntzunezkoa[i].statements.length*(3/5);
+	
+	$buttons=$('#form-entzunezkoa-buttons').empty();
+	backButton='<a id="salir-entzunezkoa-button" href="#page_menu_entzunezkoa" class="ui-btn">Irten</a>';
+	$buttons.append(backButton);
+	
+	if(correctos<minimoParaAprobar){
+		alert('Ez duzu gainditu!');
+		
+	}else{
+		alert('ZORIONAK!! Gainditu duzu!');
+	}
+}
+function salirAplicacion(){
+	navigator.app.exitApp();
 }

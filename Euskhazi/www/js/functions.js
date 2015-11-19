@@ -1,6 +1,5 @@
 
 function login() {
-	
 	var loginVal=$("#authentication_login_input").val();
 	var newUser=new User();
 	newUser.name=loginVal.toString().trim();
@@ -281,7 +280,7 @@ function checkAtarikoa(i,level){
 	var minimoParaAprobar=examsAtarikoa[i].statements.length*(3/4);
 	
 	$buttons=$('#form-atarikoa-buttons').empty();
-	backButton='<a id="salir-atarikoa-button" href="#page_menu_atarikoa" class="ui-btn">Irten</a>';
+	backButton='<a id="salir-atarikoa-button" href="#" onClick="loadAtarikoaMenu(&#39;'+level+'&#39;)" class="ui-btn">Irten</a>';
 	$buttons.append(backButton);
 
 	//se guarda el resultado dentro del usuario
@@ -289,10 +288,11 @@ function checkAtarikoa(i,level){
 	if(userNow.examsAtarikoa==undefined){
 		userNow.examsAtarikoa=new Array();
 	}
+	var k=0;
 	for(con=0;con<userNow.examsAtarikoa.length;con++){
 		if(userNow.examsAtarikoa[con].level==level && userNow.examsAtarikoa[con].numExam==i){
 			control=true;
-			var k=con;
+			k=con;
 			break;
 		}
 	}
@@ -353,7 +353,7 @@ function checkSinonimoak(i,level){
 	var minimoParaAprobar=examsSinonimoak[i].statements.length*(3/5);
 	
 	$buttons=$('#form-sinonimoak-buttons').empty();
-	backButton='<a id="salir-sinonimoak-button" href="#page_menu_sinonimoak" class="ui-btn">Irten</a>';
+	backButton='<a id="salir-sinonimoak-button" href="#" onClick="loadSinonimoakMenu(&#39;'+level+'&#39;)" class="ui-btn">Irten</a>';
 	$buttons.append(backButton);
 
 	//se guarda el resultado dentro del usuario
@@ -361,10 +361,11 @@ function checkSinonimoak(i,level){
 	if(userNow.examsSinonimoak==undefined){
 		userNow.examsSinonimoak=new Array();
 	}
+	var k=0;
 	for(con=0;con<userNow.examsSinonimoak.length;con++){
 		if(userNow.examsSinonimoak[con].level==level && userNow.examsSinonimoak[con].numExam==i){
 			control=true;
-			var k=con;
+			k=con;
 			break;
 		}
 	}
@@ -413,7 +414,7 @@ function loadExamEntzunezkoa(i,level){
 	$(':mobile-pagecontainer').pagecontainer('change', '#page-exam-entzunezkoa');
 }
 
-function checkEntzunezkoa(i){
+function checkEntzunezkoa(i,level){
 	var respondidos=0;
 	var correctos=0;
 	for(var con=0;con < examsEntzunezkoa[i].statements.length;con++){
@@ -442,8 +443,33 @@ function checkEntzunezkoa(i){
 	var minimoParaAprobar=examsEntzunezkoa[i].statements.length*(3/5);
 	
 	$buttons=$('#form-entzunezkoa-buttons').empty();
-	backButton='<a id="salir-entzunezkoa-button" href="#page_menu_entzunezkoa" class="ui-btn">Irten</a>';
+	backButton='<a id="salir-entzunezkoa-button" href="#" onClick="loadEntzunezkoaMenu(&#39;'+level+'&#39;)" class="ui-btn">Irten</a>';
 	$buttons.append(backButton);
+
+	//se guarda el resultado dentro del usuario
+	var control=false;
+	if(userNow.examsEntzunezkoa==undefined){
+		userNow.examsEntzunezkoa=new Array();
+	}
+	var k=0;
+	for(con=0;con<userNow.examsEntzunezkoa.length;con++){
+		if(userNow.examsEntzunezkoa[con].level==level && userNow.examsEntzunezkoa[con].numExam==i){
+			control=true;
+			k=con;
+			break;
+		}
+	}
+	var resultadoExamsEntzunezkoa=new ResultExamn();
+	resultadoExamsEntzunezkoa.level=level;
+	resultadoExamsEntzunezkoa.numExam=i;
+	resultadoExamsEntzunezkoa.result=correctos;
+	if(control){
+		userNow.examsEntzunezkoa[k]=resultadoExamsEntzunezkoa;
+	}else{
+		userNow.examsEntzunezkoa.push(resultadoExamsEntzunezkoa);
+	}
+	//Guardamos todas las modificaciones
+	saveUsers();
 	
 	if(correctos<minimoParaAprobar){
 		alert('Ez duzu gainditu!');

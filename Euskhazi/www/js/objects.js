@@ -186,7 +186,7 @@ var pageIdatzizkoa={
 					'<div class="ui-grid-b">'+
 						'<div class="ui-block-a" style="text-align:left;width:20%;">'+
 						'</div>'+
-						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#authentication_page" class="ui-btn ui-btn-inline ui-corner-all" >Irten</a></li></ul>'+'</div>'+
+						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#tests_page_menu_level_'+level+'" class="ui-btn ui-btn-inline ui-corner-all" >Atzera</a></li></ul>'+'</div>'+
 						'<div class="ui-block-c" style="text-align:right;width:20%;">'+
 						'</div>'+
 					'</div>'+
@@ -433,7 +433,7 @@ var pageAhozkoa={
 					'<div class="ui-grid-b">'+
 						'<div class="ui-block-a" style="text-align:left;width:20%;">'+
 						'</div>'+
-						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#authentication_page" class="ui-btn ui-btn-inline ui-corner-all" >Irten</a></li></ul>'+'</div>'+
+						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#tests_page_menu_level_'+level+'" class="ui-btn ui-btn-inline ui-corner-all" >Atzera</a></li></ul>'+'</div>'+
 						'<div class="ui-block-c" style="text-align:right;width:20%;">'+
 						'</div>'+
 					'</div>'+
@@ -898,7 +898,7 @@ var pageBerridazketak={
 					'<div class="ui-grid-b">'+
 						'<div class="ui-block-a" style="text-align:left;width:20%;">'+
 						'</div>'+
-						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#authentication_page" class="ui-btn ui-btn-inline ui-corner-all" >Irten</a></li></ul>'+'</div>'+
+						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#tests_page_menu_level_'+level+'" class="ui-btn ui-btn-inline ui-corner-all" >Atzera</a></li></ul>'+'</div>'+
 						'<div class="ui-block-c" style="text-align:right;width:20%;">'+
 						'</div>'+
 					'</div>'+
@@ -1137,21 +1137,28 @@ var pageAtarikoa={
 			for(var con=0;con<exams.length;con++){
 				if(userNow.examsAtarikoa){
 					var aprobado=false;
+					var examenHecho=false;
 					for(var k=0;k<userNow.examsAtarikoa.length;k++){
-						if(userNow.examsAtarikoa[k].level==level && userNow.examsAtarikoa[k].numExam==con && userNow.examsAtarikoa[k].result>exams[con].statements.length*(3/4)){
-							aprobado=true;
+						if(userNow.examsAtarikoa[k].level==level && userNow.examsAtarikoa[k].numExam==con){
+							examenHecho=true;
+							if(userNow.examsAtarikoa[k].result>exams[con].statements.length*(3/4)){
+								aprobado=true;
+							}
 						}
 					}
 					if(aprobado){
 						statementsDivs=statementsDivs+
-					  '<li><a href="#" onClick="loadExamAtarikoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" style="color:#0000ff;" id="menu_exam_atarikoa-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
+						'<li><a href="#" onClick="loadExamAtarikoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" style="color:#0000ff;" id="menu_exam_atarikoa-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
+					}else if(examenHecho){
+						statementsDivs=statementsDivs+
+						'<li><a href="#" onClick="loadExamAtarikoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" style="color:#cc0000;" id="menu_exam_atarikoa-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
 					}else{
 						statementsDivs=statementsDivs+
-					  '<li><a href="#" onClick="loadExamAtarikoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" style="color:#cc0000;" id="menu_exam_atarikoa-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
+						'<li><a href="#" onClick="loadExamAtarikoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" id="menu_exam_atarikoa-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
 					}
 				}else{
 					statementsDivs=statementsDivs+
-					  '<li><a href="#" onClick="loadExamAtarikoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" id="menu_exam_atarikoa-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
+					'<li><a href="#" onClick="loadExamAtarikoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" id="menu_exam_atarikoa-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
 				}
 			}
 			
@@ -1166,7 +1173,7 @@ var pageAtarikoa={
 					'<div class="ui-grid-b">'+
 						'<div class="ui-block-a" style="text-align:left;width:20%;">'+
 						'</div>'+
-						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#authentication_page" class="ui-btn ui-btn-inline ui-corner-all" >Irten</a></li></ul>'+'</div>'+
+						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#tests_page_menu_level_'+level+'" class="ui-btn ui-btn-inline ui-corner-all" >Atzera</a></li></ul>'+'</div>'+
 						'<div class="ui-block-c" style="text-align:right;width:20%;">'+
 						'</div>'+
 					'</div>'+
@@ -1249,17 +1256,24 @@ var pageSinonimoak={
 			for(var con=0;con<exams.length;con++){
 				if(userNow.examsSinonimoak){
 					var aprobado=false;
+					var examenHecho=false;
 					for(var k=0;k<userNow.examsSinonimoak.length;k++){
-						if(userNow.examsSinonimoak[k].level==level && userNow.examsSinonimoak[k].numExam==con && userNow.examsSinonimoak[k].result>exams[con].statements.length*(3/5)){
-							aprobado=true;
+						if(userNow.examsSinonimoak[k].level==level && userNow.examsSinonimoak[k].numExam==con){
+							examenHecho=true;
+							if(userNow.examsSinonimoak[k].result>exams[con].statements.length*(3/5)){
+								aprobado=true;
+							}
 						}
 					}
 					if(aprobado){
 						statementsDivs=statementsDivs+
 						'<li><a href="#" onClick="loadExamSinonimoak(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" style="color:#0000ff;" id="menu_exam_sinonimoak-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
-					}else{
+					}else if(examenHecho){
 						statementsDivs=statementsDivs+
 						'<li><a href="#" onClick="loadExamSinonimoak(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" style="color:#cc0000;" id="menu_exam_sinonimoak-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
+					}else{
+						statementsDivs=statementsDivs+
+						'<li><a href="#" onClick="loadExamSinonimoak(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" id="menu_exam_sinonimoak-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
 					}
 				}else{
 					statementsDivs=statementsDivs+
@@ -1278,7 +1292,7 @@ var pageSinonimoak={
 					'<div class="ui-grid-b">'+
 						'<div class="ui-block-a" style="text-align:left;width:20%;">'+
 						'</div>'+
-						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#authentication_page" class="ui-btn ui-btn-inline ui-corner-all" >Irten</a></li></ul>'+'</div>'+
+						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#tests_page_menu_level_'+level+'" class="ui-btn ui-btn-inline ui-corner-all" >Atzera</a></li></ul>'+'</div>'+
 						'<div class="ui-block-c" style="text-align:right;width:20%;">'+
 						'</div>'+
 					'</div>'+
@@ -1352,8 +1366,31 @@ var pageEntzunezkoa={
 			var statementsDivs='<ul data-role="listview">';
 			
 			for(var con=0;con<exams.length;con++){
-				statementsDivs=statementsDivs+
-				  '<li><a href="#" onClick="loadExamEntzunezkoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" id="menu_exam_entzunezkoa-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
+				if(userNow.examsEntzunezkoa){
+					var aprobado=false;
+					var examenHecho=false;
+					for(var k=0;k<userNow.examsEntzunezkoa.length;k++){
+						if(userNow.examsEntzunezkoa[k].level==level && userNow.examsEntzunezkoa[k].numExam==con){
+							examenHecho=true;
+							if(userNow.examsEntzunezkoa[k].result>exams[con].statements.length*(3/5)){
+								aprobado=true;
+							}
+						}
+					}
+					if(aprobado){
+						statementsDivs=statementsDivs+
+						'<li><a href="#" onClick="loadExamEntzunezkoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" style="color:#0000ff;" id="menu_exam_entzunezkoa-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
+					}else if(examenHecho){
+						statementsDivs=statementsDivs+
+						'<li><a href="#" onClick="loadExamEntzunezkoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" style="color:#cc0000;" id="menu_exam_entzunezkoa-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
+					}else{
+						statementsDivs=statementsDivs+
+						'<li><a href="#" onClick="loadExamEntzunezkoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" id="menu_exam_entzunezkoa-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
+					}
+				}else{
+					statementsDivs=statementsDivs+
+					'<li><a href="#" onClick="loadExamEntzunezkoa(&#39;'+con+'&#39;,&#39;'+level+'&#39;)" id="menu_exam_entzunezkoa-'+level+'-'+con+'">'+'Azterketa '+(con+1)+'</a></li>';
+				}
 			}
 			
 			statementsDivs=statementsDivs+'</ul>';
@@ -1367,7 +1404,7 @@ var pageEntzunezkoa={
 					'<div class="ui-grid-b">'+
 						'<div class="ui-block-a" style="text-align:left;width:20%;">'+
 						'</div>'+
-						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#authentication_page" class="ui-btn ui-btn-inline ui-corner-all" >Irten</a></li></ul>'+'</div>'+
+						'<div class="ui-block-b" style="text-align:center;width:60%;">'+'<ul data-role="listview"><li><a href="#tests_page_menu_level_'+level+'" class="ui-btn ui-btn-inline ui-corner-all" >Atzera</a></li></ul>'+'</div>'+
 						'<div class="ui-block-c" style="text-align:right;width:20%;">'+
 						'</div>'+
 					'</div>'+
@@ -1410,7 +1447,7 @@ var pageEntzunezkoa={
 				'</fieldset>';
 			}
 			statementsDivs=statementsDivs+'<div id="form-entzunezkoa-buttons">';
-			statementsDivs=statementsDivs+'<a id="correctExams_entzunezkoa" name="onClickCorrectExams" href="" onClick="checkEntzunezkoa(&#39;'+i+'&#39;)" class="ui-btn">Zuzendu</a>'
+			statementsDivs=statementsDivs+'<a id="correctExams_entzunezkoa" name="onClickCorrectExams" href="" onClick="checkEntzunezkoa(&#39;'+i+'&#39;,&#39;'+level+'&#39;)" class="ui-btn">Zuzendu</a>'
 			statementsDivs=statementsDivs+'</div>';
 			statementsDivs='<form id="form-entzunezkoa">'+statementsDivs+'</form>';
 			

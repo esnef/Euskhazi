@@ -13,10 +13,7 @@ function login() {
 		}
 	}else{
 		alert("Empty string");
-	}
-	
-	
-	
+	}	
 }
 
 function start(){

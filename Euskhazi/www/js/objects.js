@@ -129,7 +129,7 @@ function loadDataJSONIdatzizkoa(fileName,level){
 		    });
 		       
 	    }else{
-	    	alert("Error:"+"No exite el ID de dicha pagina");
+	    	alert("Errorea:"+"Ez da existitzen orrialde horren IDrik");
 	    }
 	    $("div").on( "pageshow", function( event, ui ) {
     		var idSearch="levels_page_menu";
@@ -197,10 +197,10 @@ var pageIdatzizkoa={
 		
 		create: function(i,exams,level){
 			if(exams==null || level==null){
-				alert("No se ha podido presentar en pantalla porque se ha pasado un valor menos a uno");
+				alert("Ezin izan da pantaila erakutsi, pasatako balioa minus bat izan baita");
 				return null;
 			}else if(i>=exams.length){
-				alert("No se puede solicitar un numero de examen superior al que se tiene");
+				alert("Ezin da daukazuna baino maila altuagoko azterketarik eskatu");
 				return null;
 			}
 			var pageDiv=$('<div data-role="page" id="example_page_idatzizkoa-exam-'+i+'-level-'+level+'"></div>');
@@ -275,7 +275,7 @@ var pageIdatzizkoa={
 
 function loadIdatzizkoa(level){
 	if(level==null){
-		alert("Error en el nivel de examen");
+		alert("Errorea azterketaren mailan");
 	}
 	loadDataJSONIdatzizkoa(fileNameIdatzizkoa,level);
 }
@@ -358,7 +358,7 @@ function loadDataJSONAhozkoa(fileName,level){
 		    });
 		       
 	    }else{
-	    	alert("Error:"+"No exite el ID de dicha pagina");
+	    	alert("Errorea:"+"Ez da existitzen orrialde horren IDrik");
 	    }
 	    $("div").on( "pageshow", function( event, ui ) {
     		var idSearch="levels_page_menu";
@@ -444,10 +444,10 @@ var pageAhozkoa={
 		
 		create: function(i,exams,level){
 			if(exams==null || level==null){
-				alert("No se ha podido presentar en pantalla porque se ha pasado un valor menos a uno");
+				alert("Ezin izan da pantaila erakutsi, pasatako balioa minus bat izan baita");
 				return null;
 			}else if(i>=exams.length){
-				alert("No se puede solicitar un numero de examen superior al que se tiene");
+				alert("Ezin da daukazuna baino maila altuagoko azterketarik eskatu");
 				return null;
 			}
 			var pageDiv=$('<div data-role="page" id="example_page_ahozkoa-exam-'+i+'-level-'+level+'"></div>');
@@ -586,7 +586,7 @@ var audio = {
 				this.media.startRecord();//Comenzar a grabar con el objeto del atributo media
 			}else {
 
-				alert("No media file to record");
+				alert("Ez dago multiedia fitxategirik grabaketa egiteko");
 			}	
 
 		},
@@ -606,7 +606,7 @@ var audio = {
 		        );
 		    }
 			else {
-				alert("No media file to stop");
+				alert("Ez dago multimedia fitxategirik gelditzeko");
 			}		
 		}		
 };
@@ -626,12 +626,12 @@ var fileUtilities = {
 								fileEntry.remove(onSuccess);//Borrar el fichero y seguir con onSuccess
 		    				},
 		    				function(error) {
-		    					alert("Source file NOT accesible; not removed");
+		    					alert("Ez dago iturri fitxategirik baliagarri; ez da ezabatu");
 		    				}
 		    		);			
 				},
 				function(error) {
-					alert(error.prototype+' File not copied. '+'error.code: '+error.code+'\nerror.source: '+error.source+'\nerror.target: '+error.target+'\nerror.http_status: '+error.http_status);
+					alert(error.prototype+' Fitxategia ez da kopiatu. '+'error.code: '+error.code+'\nerror.source: '+error.source+'\nerror.target: '+error.target+'\nerror.http_status: '+error.http_status);
 				}
 			);
 		}
@@ -837,7 +837,7 @@ function loadDataJSONBerridazketak(fileName,level){
 	    		
 	    	});    
 	    }else{
-	    	alert("Error:"+"No exite el ID de dicha pagina");
+	    	alert("Errorea:"+"Ez da existitzen orrialde horren IDrik");
 	    }
 	    $("div").on( "pageshow", function( event, ui ) {
     		var idSearch="levels_page_menu";
@@ -909,10 +909,10 @@ var pageBerridazketak={
 		
 		create: function(i,exams,level){
 			if(exams==null || level==null){
-				alert("No se ha podido presentar en pantalla porque se ha pasado un valor menos a uno");
+				alert("Ezin izan da pantaila erakutsi, pasatako balioa minus bat izan baita");
 				return null;
 			}else if(i>=exams.length){
-				alert("No se puede solicitar un numero de examen superior al que se tiene");
+				alert("Ezin da daukazuna baino maila altuagoko azterketarik eskatu");
 				return null;
 			}
 			var pageDiv=$('<div data-role="page" id="example_page_berridazketa-exam-'+i+'-level-'+level+'"></div>');
@@ -981,7 +981,7 @@ function loadPageLeves(){
     	//Existe.
 	    $(':mobile-pagecontainer').pagecontainer('change','#'+idSearch);
     }else{
-    	alert("No se tiene el id del menu de niveles");
+    	alert("Ezin da aurkitu azterketa mailen menuaren IDa");
     }
 	
 }
@@ -1057,7 +1057,7 @@ function loadPageExams(level){
     	//Existe.
 	    $(':mobile-pagecontainer').pagecontainer('change','#'+idSearch);
     }else{
-    	alert("No se tiene el id del menu de pruebas");
+    	alert("Ez da aurkitu azterketa moten menuaen IDa");
     }
 	
 }
@@ -1132,7 +1132,7 @@ var pageAtarikoa={
 					'<h1 style="margin-left:0;margin-right:0;white-space: nowrap;overflow: visible;">'+'Atarikoa '+level+'</h1>'+
 				'</div>';
 			
-			var statementsDivs='<ul data-role="listview">';
+			var statementsDivs='<ul data-role="listview" data-inset="true">';
 			
 			for(var con=0;con<exams.length;con++){
 				if(userNow.examsAtarikoa){
@@ -1184,10 +1184,10 @@ var pageAtarikoa={
 		
 		createExam: function(i,exams,level){
 			if(exams==null || level==null){
-				alert("No se ha podido presentar en pantalla porque se ha pasado un valor menos a uno");
+				alert("Ezin izan da pantaila erakutsi, pasatako balioa minus bat izan baita");
 				return null;
 			}else if(i>=exams.length){
-				alert("No se puede solicitar un numero de examen superior al que se tiene");
+				alert("Ezin da daukazuna baino maila altuagoko azterketarik eskatu");
 				return null;
 			}
 			$('#page-exam-atarikoa-'+i).remove();
@@ -1251,7 +1251,7 @@ var pageSinonimoak={
 					'<h1 style="margin-left:0;margin-right:0;white-space: nowrap;overflow: visible;">'+'Sinonimoak '+level+'</h1>'+
 				'</div>';
 			
-			var statementsDivs='<ul data-role="listview">';
+			var statementsDivs='<ul data-role="listview" data-inset="true">';
 			
 			for(var con=0;con<exams.length;con++){
 				if(userNow.examsSinonimoak){
@@ -1303,10 +1303,10 @@ var pageSinonimoak={
 		
 		createExam: function(i,exams,level){
 			if(exams==null || level==null){
-				alert("No se ha podido presentar en pantalla porque se ha pasado un valor menos a uno");
+				alert("Ezin izan da pantaila erakutsi, pasatako balioa minus bat izan baita");
 				return null;
 			}else if(i>=exams.length){
-				alert("No se puede solicitar un numero de examen superior al que se tiene");
+				alert("Ezin da daukazuna baino maila altuagoko azterketarik eskatu");
 				return null;
 			}
 			$('#page-exam-sinonimoak').remove();
@@ -1363,7 +1363,7 @@ var pageEntzunezkoa={
 					'<h1 style="margin-left:0;margin-right:0;white-space: nowrap;overflow: visible;">'+'Entzunezkoa '+level+'</h1>'+
 				'</div>';
 			
-			var statementsDivs='<ul data-role="listview">';
+			var statementsDivs='<ul data-role="listview" data-inset="true">';
 			
 			for(var con=0;con<exams.length;con++){
 				if(userNow.examsEntzunezkoa){
@@ -1415,10 +1415,10 @@ var pageEntzunezkoa={
 		
 		createExam: function(i,exams,level){
 			if(exams==null || level==null){
-				alert("No se ha podido presentar en pantalla porque se ha pasado un valor menos a uno");
+				alert("Ezin izan da pantaila erakutsi, pasatako balioa minus bat izan baita");
 				return null;
 			}else if(i>=exams.length){
-				alert("No se puede solicitar un numero de examen superior al que se tiene");
+				alert("Ezin da daukazuna baino maila altuagoko azterketarik eskatu");
 				return null;
 			}
 			$('#page-exam-entzunezkoa').remove();

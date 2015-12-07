@@ -58,6 +58,9 @@ function refreshUsersList(){
 	if(users!=null){
 		var $authentication_users_ul=$('#authentication_users_ul');
 		$authentication_users_ul.empty()
+		if(users.length>0){
+			$('#lista_usuarios_h4').show();
+		}
 		for(con=0;con<users.length;con++){
 			
 			$authentication_users_ul.append(

@@ -9,10 +9,10 @@ function login() {
 			refreshUsersList();
 			loadUser(newUser.name);
 		}else{
-			alert("A user already exists with this name");
+			alert("Erabiltzaile bat existitzen da dagoeneko izen horrekin");
 		}
 	}else{
-		alert("Empty string");
+		alert("Erabiltzaile izena hutsa dago");
 	}	
 }
 
@@ -165,11 +165,11 @@ function check(i) {
 	var answer=$("input[name='radio-choice-"+i+"']:checked").val();
 	
 	if(answer==tests.test[i].correct) {
-		alert("CORRECT");
+		alert("ZUZENA");
 		results.corrects++;
 	}
 	else {
-		alert("WRONG");
+		alert("OKERRA");
 		$("#button-"+i+"-2").attr("onclick","advice("+i+","+answer+")");
 		$("#button-"+i+"-2").css("display","block");
 	}
@@ -212,7 +212,7 @@ function advice(pI,qI) {
 				$("#imageAdvice-"+pI).show();
 			}
 			else{
-				alert("ADVICE: "+adv);
+				alert("AHOLKUA: "+adv);
 			}
 		}
 	}
